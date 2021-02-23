@@ -1,4 +1,4 @@
-package com.ewu.moonx;
+package com.ewu.moonx.UI.FollowUpPkj;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,12 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class ChatFragment extends Fragment{
+import com.ewu.moonx.R;
+
+public class FP3 extends Fragment{
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_followup_chat,container,false);
+        View view = inflater.inflate(R.layout.page3,container,false);
         return view;
     }
 }

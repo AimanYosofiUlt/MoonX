@@ -1,4 +1,4 @@
-package com.ewu.moonx;
+package com.ewu.moonx.UI.MainPkj;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -10,6 +10,8 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ewu.moonx.R;
 
 import java.util.Objects;
 

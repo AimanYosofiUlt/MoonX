@@ -1,4 +1,4 @@
-package com.ewu.moonx;
+package com.ewu.moonx.UI.FollowUpPkj;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,13 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ewu.moonx.R;
+
 public class FollowFragment extends Fragment{
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_followup_follow,container,false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_followup_follow,container,false);
     }
 }

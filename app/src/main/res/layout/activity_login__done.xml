@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color"
+    tools:context=".UI.LoginPkj.LoginActivity">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/c"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/b"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+
+        <ImageView
+            android:id="@+id/clapImg"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clap"
+            android:scaleType="fitCenter" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clapImg"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingTop="10dp"
+            android:paddingRight="40dp"
+            tools:ignore="UselessParent">
+
+            <TextView
+                style="@style/TextView_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                android:gravity="center_horizontal"
+                android:padding="0dp"
+                android:text="@string/every_thing_is_done"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                style="@style/TextView_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#00000000"
+                android:gravity="center_horizontal"
+                android:padding="0dp"
+                android:text="@string/wait_verfiy_message"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+
+            <TextView
+                style="@style/TextView_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#00000000"
+                android:gravity="center_horizontal"
+                android:padding="0dp"
+                android:text="@string/if_you_now"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
+
+            <com.dd.processbutton.iml.ActionProcessButton
+                android:id="@+id/verifyBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="16dp"
+                android:text="Check Now"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                app:pb_colorComplete="@color/green_complete"
+                app:pb_colorError="@color/red_error"
+                app:pb_colorNormal="@color/blue_normal"
+                app:pb_colorPressed="@color/blue_pressed"
+                app:pb_colorProgress="@color/purple_progress"
+                app:pb_textComplete="Success"
+                app:pb_textError="Error"
+                app:pb_textProgress="Loading" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.ewu.moonx;
+package com.ewu.moonx.UI.FollowUpPkj;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.ewu.moonx.R;
 
 import java.util.Objects;
 

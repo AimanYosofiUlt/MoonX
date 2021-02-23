@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/yemen"
+        android:icon="@drawable/yemen"
+        android:title="@string/yemen"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/egypt"
+        android:icon="@drawable/egypt"
+        android:title="@string/egypt"
+        app:showAsAction="withText" />
+</menu>

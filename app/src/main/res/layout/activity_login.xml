@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.LoginPkj.LoginActivity">
+
+    <com.flaviofaria.kenburnsview.KenBurnsView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/yemen_city_background" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/c"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop" />
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/b"
+        android:scaleType="centerCrop" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="40dp"
+        tools:ignore="UselessParent">
+
+        <TextView
+            style="@style/TextView_Style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_background"
+            android:text="First Name" />
+
+        <EditText
+            android:id="@+id/firstNameED"
+            style="@style/EditText_Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+        <TextView
+            style="@style/TextView_Style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Second Name" />
+
+        <EditText
+            android:id="@+id/secondNameED"
+            style="@style/EditText_Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+        <TextView
+            style="@style/TextView_Style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Third Name" />
+
+        <EditText
+            android:id="@+id/thirdNameED"
+            style="@style/EditText_Style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+        <TextView
+            style="@style/TextView_Style"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Phon" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/phoneED"
+                style="@style/EditText_Style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="phone"
+                android:textColor="@color/darkGray" />
+
+            <ImageButton
+                android:id="@+id/countryImgBtn"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/yemen" />
+        </LinearLayout>
+
+        <com.dd.processbutton.iml.ActionProcessButton
+            android:id="@+id/loginBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:text="Sign_in"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:pb_colorComplete="@color/green_complete"
+            app:pb_colorError="@color/red_error"
+            app:pb_colorNormal="@color/blue_normal"
+            app:pb_colorPressed="@color/blue_pressed"
+            app:pb_colorProgress="@color/purple_progress"
+            app:pb_textComplete="Success"
+            app:pb_textError="Error"
+            app:pb_textProgress="Loading" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

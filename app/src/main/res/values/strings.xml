@@ -1,3 +1,37 @@
 <resources>
-    <string name="app_name">MoonX</string>
+    <string name="app_name">MoonX Media Platform</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="weak_internet_connection">Weak Internet Connection</string>
+    <string name="unknown_error">There is Unkown Erorr</string>
+    <string name="try_again">Try Again</string>
+    <string name="incorrect_verfication_code">incorrect_verfication_code</string>
+    <string name="empty_filed_error">Pleast Enter the empty fields</string>
+    <string name="invlaid_Auth">Firebase AuthInvalid Credentials Exception</string>
+    <string name="manyRequestExption">Firebase TooMany Requests Exception</string>
+    <string name="yemen">Yemen</string>
+    <string name="egypt">Egypt</string>
+    <string name="uncorrect_phone">wrong phone number</string>
+    <string name="check">Check</string>
+    <string name="recive_msg">You will recive an messageYou will recive an messageYou will recive an message</string>
+    <string name="wrong_verification_code">Wrong Verification Code</string>
+    <string name="wait_verfiy_message">You will just wait for MoonX Media company approval on your application within application users. </string>
+    <string name="if_you_now">If you sure your odred done click CHECK NOW</string>
+    <string name="every_thing_is_done">Every thing is Done</string>
+    <string name="request">Request</string>
+    <string name="save">Save</string>
+    <string name="add_new_request">Add new request</string>
+
+    <string-array name="daysPicker">
+        <item>اليوم</item>
+        <item>غداً</item>
+        <item>يومين</item>
+        <item>أيام</item>
+        <item>يوم</item>
+    </string-array>
+
+    <string-array name="AMP">
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
 </resources>
