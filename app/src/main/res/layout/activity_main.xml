@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/activity_main_logo_panal_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/frameLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/gray_back"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingTop="35dp"
+        android:paddingRight="30dp" />
+
+
+    <RelativeLayout
+        android:id="@+id/panalBackground"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@color/primary_color" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="38dp"
+        android:background="@drawable/activity_main_logo_panal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/menu_logo2" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/logo_moon" />
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/mainSC"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/frameLayout"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="35dp"
+        android:background="@drawable/activity_main_glass_panal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingTop="20dp"
+            android:paddingRight="16dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+                <RelativeLayout
+                    android:id="@+id/requestBtnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="169dp"
+                    android:background="@drawable/activity_main_gray_option" />
+
+                <RelativeLayout
+                    android:id="@+id/requestBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/activity_main_glass_option"
+                    android:clickable="true">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toStartOf="@+id/btnImg"
+                        android:fontFamily="@font/main"
+                        android:text="Request managment"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/btnImg"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/activity_main_option_image_back">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/box" />
+
+                    </RelativeLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/notifyDot1"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="#f00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="7dp"
+                        android:layout_toStartOf="@id/btnImg"
+                        android:layout_toEndOf="@id/notifyDot1"
+                        android:fontFamily="@font/main"
+                        android:text="some request is done"
+                        android:textColor="@color/second_color" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/empfollowBtnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="169dp"
+                    android:background="@drawable/activity_main_gray_option" />
+
+                <RelativeLayout
+                    android:id="@+id/empfollowBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/activity_main_glass_option"
+                    android:clickable="true">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toStartOf="@+id/btnImg2"
+                        android:fontFamily="@font/main"
+                        android:text="Employee Follow up"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/btnImg2"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/activity_main_option_image_back">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/location" />
+
+                    </RelativeLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/notifyDot2"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="#f00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="7dp"
+                        android:layout_toStartOf="@id/btnImg2"
+                        android:layout_toEndOf="@id/notifyDot2"
+                        android:fontFamily="@font/main"
+                        android:text="some request is done"
+                        android:textColor="@color/second_color" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/userMgrBtnBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="169dp"
+                    android:background="@drawable/activity_main_gray_option" />
+
+                <RelativeLayout
+                    android:id="@+id/userMgrBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="@drawable/activity_main_glass_option"
+                    android:clickable="true">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_toStartOf="@+id/btnImg3"
+                        android:fontFamily="@font/main"
+                        android:text="Users managment"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:id="@+id/btnImg3"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/activity_main_option_image_back">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/user" />
+
+                    </RelativeLayout>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/notifyDot3"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:src="#f00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="7dp"
+                        android:layout_toStartOf="@id/btnImg3"
+                        android:layout_toEndOf="@id/notifyDot3"
+                        android:fontFamily="@font/main"
+                        android:text="some request is done"
+                        android:textColor="@color/second_color" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/glass_title"
+                android:padding="2dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/main"
+                    android:text="recent messages"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:text="no recent messages"
+                android:textAlignment="center" />
+
+
+            <LinearLayout
+                android:id="@+id/msgLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

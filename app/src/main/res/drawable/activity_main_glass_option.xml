@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <selector>
+            <item android:state_pressed="true" android:drawable="@drawable/activity_main_glass_option_inclick"/>
+            <item android:drawable="@drawable/activity_main_glass_option_outclick"/>
+        </selector>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="45"
+                android:centerColor="#00FFFFFF"
+                android:endColor="#4DEBEBEB"
+                android:startColor="#4DFFFFFF" />
+            <corners android:radius="15dp"/>
+        </shape>
+    </item>
+
+</layer-list>

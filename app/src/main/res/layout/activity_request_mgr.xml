@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/add_req_btn_back" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            android:background="@drawable/add_request_glass_btn"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/menu_logo2" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/menu_logo2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/main"
+                android:text="ADD REQUEST"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/glass_title"
+        android:padding="2dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/main"
+            android:text="Requests"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/glass_panal"
+        android:padding="10dp">
+
+        <Spinner
+            android:id="@+id/timeSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/selecteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timeSpinner"
+            android:fontFamily="@font/main"
+            android:text="Select:"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/selecteTitle"
+            android:layout_alignBottom="@+id/selecteTitle"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@+id/selecteTitle">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/inProgress_color" />
+
+                    <ProgressBar
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="In Progress"
+                        android:textColor="@color/inProgress_color"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/complete_color" />
+
+                    <ProgressBar
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="Completed"
+                        android:textColor="@color/complete_color"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/unComplete_color" />
+
+                    <ProgressBar
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="Uncompleted"
+                        android:textColor="@color/unComplete_color"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/canceled_color" />
+
+                    <ProgressBar
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="Cancled"
+                        android:textColor="@color/canceledText_color"
+                        android:textSize="11sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/view_request_card" />
+
+            <include layout="@layout/view_request_card" />
+
+            <include layout="@layout/view_request_card" />
+
+            <include layout="@layout/view_request_card" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+
