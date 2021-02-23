@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
         arrayAdapter.add("Last Day");
 
         ((Spinner) findViewById(R.id.timeSpinner)).setAdapter(arrayAdapter);
-//
-//        init();
-//        initEvent();
     }
 
 
