@@ -20,6 +20,8 @@
         <activity android:name=".UI.LoginPkj.Login_DoneActivity"/>
         <activity android:name=".UI.LoginPkj.Login_VerifyActivity"/>
         <activity android:name=".UI.LoginPkj.LoginActivity"/>
+        <activity android:name=".UI.MainPkj.SplashActivity"/>
+        <activity android:name=".UI.MainPkj.WelcomeActivity"/>
         <activity android:name=".UI.MainPkj.MainActivity">
 
         </activity>
