@@ -8,37 +8,38 @@ import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ewu.moonx.App.Firebase;
+import com.ewu.moonx.App.PublicVariable;
+import com.ewu.moonx.App.Status;
+import com.ewu.moonx.Pojo.DB.Template.Str;
+import com.ewu.moonx.Pojo.DB.Template.Users;
 import com.ewu.moonx.R;
+import com.ewu.moonx.UI.LoginPkj.Login_VerifyActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    ScrollView mainSC;
-    RelativeLayout requestBtn;
-    ArrayAdapter arrayAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_request_mgr);
+        setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
-
-        arrayAdapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item);
-        arrayAdapter.add("Last Month");
-        arrayAdapter.add("Last Week");
-        arrayAdapter.add("Last Day");
-
-        ((Spinner) findViewById(R.id.timeSpinner)).setAdapter(arrayAdapter);
+        init();
     }
 
-
     private void init() {
-        mainSC = findViewById(R.id.mainSC);
-        requestBtn = findViewById(R.id.requestBtn);
+
     }
 
     private void initEvent() {

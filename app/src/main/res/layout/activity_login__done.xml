@@ -7,6 +7,22 @@
     android:background="@color/primary_color"
     tools:context=".UI.LoginPkj.LoginActivity">
 
+   <RelativeLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_margin="16dp"
+       android:layout_alignParentStart="false"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:background="@drawable/search_edittext_back"
+       android:padding="10dp">
+       <ImageView
+           android:layout_width="20dp"
+           android:src="@drawable/add_message"
+           android:background="#00000000"
+           android:layout_height="20dp"/>
+   </RelativeLayout>
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"

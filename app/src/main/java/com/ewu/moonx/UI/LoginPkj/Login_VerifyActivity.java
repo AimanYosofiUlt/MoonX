@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.ewu.moonx.App.Firebase;
 import com.ewu.moonx.App.PublicVariable;
 import com.ewu.moonx.App.Status;
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
+import com.ewu.moonx.Pojo.DB.Template.OldAccount;
 import com.ewu.moonx.Pojo.DB.Template.Str;
 import com.ewu.moonx.Pojo.DB.Template.Users;
 import com.ewu.moonx.Pojo.DB.UsersTable;
@@ -27,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.Objects;
 
@@ -38,6 +41,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
     EditText codeED;
     ActionProcessButton verifyBtn;
     boolean isNeedConfig = true;
+    int singedCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +103,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
                     if (isNeedConfig)
                         configuration();
                     else
-                        sendUserInfoToFDB();
+                        checkUserInFDB();
             }
 
             public void configuration() {
@@ -126,7 +130,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
                 mAuth.signInWithCredential(loginCredential)
                         .addOnCompleteListener(Login_VerifyActivity.this, task -> {
                             if (task.isSuccessful()) {
-                                sendUserInfoToFDB();
+                                checkUserInFDB();
                             } else {
                                 if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                     showErrorMessage(getString(R.string.incorrect_verfication_code));
@@ -149,12 +153,72 @@ public class Login_VerifyActivity extends AppCompatActivity {
         });
     }
 
-    private void sendUserInfoToFDB() {
-        Users user = new Users(PublicVariable.getUid(), firstName, secondName, thirdName, phoneNumber);
-        Firebase.FireCloudRef(Str.Users).document(PublicVariable.getUid()).set(user)
-                .addOnSuccessListener(onSuccess())
-                .addOnFailureListener(onFailure());
+    private void checkUserInFDB() {
+        Firebase.FireCloudRef(Str.Users).document(PublicVariable.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                if (documentSnapshot.exists()) {
+                    Users users = documentSnapshot.toObject(Users.class);
+                    assert users != null;
+                    singedCount = users.getSignCount();
+                    sendRepeatedAccountNotify();
+                } else {
+                    singedCount = 0;
+                    sendUserInfoToFDB();
+                }
+                Toast.makeText(Login_VerifyActivity.this, " Data is : " + singedCount, Toast.LENGTH_SHORT).show();
+            }
+
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showErrorMessage(getString(R.string.weak_internet_connection));
+                isNeedConfig = false;
+            }
+        });
     }
+
+    private void sendRepeatedAccountNotify() {
+        String id = singedCount + "-" + PublicVariable.getUid();
+        OldAccount oldAccount = new OldAccount(PublicVariable.getUid(), Str.CMD_RepeatedAccount);
+        Firebase.FireCloudRef(Str.OldAccount).document(id).set(oldAccount)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        sendUserInfoToFDB();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showErrorMessage(getString(R.string.weak_internet_connection));
+                isNeedConfig = false;
+            }
+        });
+    }
+
+    private void sendUserInfoToFDB() {
+        singedCount++;
+        Users user = new Users(PublicVariable.getUid()
+                , firstName
+                , secondName
+                , thirdName
+                , phoneNumber
+                , UsersTable.hisAdmin
+                , singedCount);
+
+        Firebase.FireCloudRef(Str.TempUsers).document(PublicVariable.getUid()).set(user)
+                .addOnSuccessListener(onSuccess())
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showErrorMessage(getString(R.string.weak_internet_connection));
+                        isNeedConfig = false;
+                    }
+                });
+    }
+
 
     private OnSuccessListener<? super Void> onSuccess() {
         return new OnSuccessListener<Void>() {
@@ -171,7 +235,8 @@ public class Login_VerifyActivity extends AppCompatActivity {
                         .insert(users.secondNameCol, secondName)
                         .insert(users.thirdNameCol, thirdName)
                         .insert(users.phoneCol, phoneNumber)
-                        .insert(users.typeCol, users.hisUser)
+                        .insert(users.typeCol, UsersTable.hisAdmin)
+                        .insert(users.signCountCol, singedCount)
                         .inTo(users);
             }
 
@@ -181,13 +246,6 @@ public class Login_VerifyActivity extends AppCompatActivity {
                 Login_VerifyActivity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 finish();
             }
-        };
-    }
-
-    private OnFailureListener onFailure() {
-        return e -> {
-            showErrorMessage(getString(R.string.weak_internet_connection));
-            isNeedConfig = false;
         };
     }
 

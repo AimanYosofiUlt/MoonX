@@ -14,9 +14,10 @@ public class UsersTable extends DataBase {
     public final DBColumn phoneCol = new DBColumn(this).getStringInstance("Phone");
     public final DBColumn typeCol = new DBColumn(this).getStringInstance("Type");
     public final DBColumn allowUserCol = new DBColumn(this).getStringInstance("AllowUser");
+    public final DBColumn signCountCol =new DBColumn(this).getNumericInstance("SignCount");
 
     //Attr
-    public static final String hisUser = "UserType";
+    public static final String hisJournalist = "JournalistType";
     public static final String hisAdmin = "AdminType";
 
     public final String hisAllowed = "hisAllowed";
@@ -33,8 +34,9 @@ public class UsersTable extends DataBase {
         addColumn(secondNameCol, true, true);
         addColumn(thirdNameCol, true, true);
         addColumn(phoneCol, true, true);
-        addColumn(typeCol, hisUser);
+        addColumn(typeCol, hisAdmin);
         addColumn(allowUserCol,hisNotAllowed);
+        addColumn(signCountCol,true,true);
         CreateTable(sqLiteDatabase, name);
     }
 }

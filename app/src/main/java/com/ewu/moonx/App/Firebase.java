@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Firebase {
 
-    public static DatabaseReference RealTimeRef(String parent) {
+    public static DatabaseReference  RealTimeRef(String parent) {
         return FirebaseDatabase.getInstance().getReference(parent);
     }
 

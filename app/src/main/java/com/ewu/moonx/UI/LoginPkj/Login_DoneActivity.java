@@ -82,14 +82,15 @@ public class Login_DoneActivity extends AppCompatActivity {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         assert value != null;
-                        showActivity(Objects.requireNonNull(value.toObject(UserConfig.class)));
+                        if (value.exists())
+                            showActivity(Objects.requireNonNull(value.toObject(UserConfig.class)));
                     }
                 });
     }
 
     private void showActivity(UserConfig userConfig) {
         if (userConfig.getUid().equals(PublicVariable.getUid())) {
-            Intent intent= new Intent(Login_DoneActivity.this, MainActivity.class);
+            Intent intent = new Intent(Login_DoneActivity.this, MainActivity.class);
 
             UsersTable usersTable = new UsersTable(Login_DoneActivity.this);
 
