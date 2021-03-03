@@ -11,12 +11,13 @@ public class PublicVariable {
 
     public static final String VERIFICATION_ID = "VERIFICATION_ID";
     public static final String TOKEN = "TOKEN";
+
     public static final String FIRST_NAME = "FIRST_NAME" ;
     public static final String SECOND_NAME = "SECOND_NAME" ;
     public static final String THIRD_NAME = "THIRD_NAME" ;
     public static final String PHONE = "PHONE" ;
 
-    public static final String EMP_UID = "EMP_UID" ;
+    public static final String UserInfo  = "UserInfo";
 
     public static String getUid(){
        return Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();

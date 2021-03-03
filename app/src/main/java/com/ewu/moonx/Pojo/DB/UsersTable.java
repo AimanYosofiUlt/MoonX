@@ -19,6 +19,8 @@ public class UsersTable extends DataBase {
     //Attr
     public static final String hisJournalist = "JournalistType";
     public static final String hisAdmin = "AdminType";
+    public static final String hisBlock = "BlockType";
+
 
     public final String hisAllowed = "hisAllowed";
     public final String hisNotAllowed = "hisNotAllowed";

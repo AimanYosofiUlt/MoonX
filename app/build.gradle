@@ -60,4 +60,5 @@ dependencies {
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
     implementation 'com.etebarian:meow-bottom-navigation-java:1.2.0'
     implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
+    implementation 'com.wang.avi:library:2.1.3'
 }

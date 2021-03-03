@@ -20,6 +20,8 @@
     <string name="request">Request</string>
     <string name="save">Save</string>
     <string name="add_new_request">Add new request</string>
+    <string name="moonx_platform">Moonx platform app</string>
+    <string name="jounralist_app">Journalist app</string>
 
     <string-array name="daysPicker">
         <item>اليوم</item>

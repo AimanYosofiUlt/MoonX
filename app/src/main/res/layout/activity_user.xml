@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/add_req_btn_back"
+
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/add_req_btn_back" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            android:background="@drawable/add_request_glass_btn"
+            android:padding="12dp">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="30dp"
+                android:src="@drawable/share" />
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="30dp"
+                android:src="@drawable/share" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/main"
+                android:text="SHARE AN APP"
+                android:textColor="@color/primary_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/glass_title"
+        android:padding="2dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/main"
+            android:text="Users"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#4DFFFFFF"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_toStartOf="@+id/reRl1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/main"
+                            android:text="New Users"
+                            android:textColor="@color/black"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/newUser_offline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/main"
+                            android:text="offline mode"
+                            android:textColor="@color/primary_color"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/reRl1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="16dp">
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/newUserAVI"
+                            style="@style/AVLoadingIndicatorView"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_centerInParent="true"
+                            android:visibility="visible"
+                            app:indicatorColor="#000"
+                            app:indicatorName="BallClipRotateMultipleIndicator" />
+
+                        <ImageView
+                            android:id="@+id/newUserRefersh"
+                            style="@style/AVLoadingIndicatorView"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_centerInParent="true"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:src="@drawable/refresh"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/newUser_emptyMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="!! there is no new user !!"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/newUserLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="#1A00ADEF"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_toStartOf="@+id/reRl2"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/glasslogo" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/main"
+                            android:text="MoonX Platform"
+                            android:textColor="@color/third_color"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/platfrom_offline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/main"
+                            android:text="offline mode"
+                            android:textColor="@color/primary_color"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/reRl2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="16dp">
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/platformAVI"
+                            style="@style/AVLoadingIndicatorView"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_centerInParent="true"
+                            android:visibility="visible"
+                            app:indicatorColor="#000"
+                            app:indicatorName="BallClipRotateMultipleIndicator" />
+
+                        <ImageView
+                            android:id="@+id/platfromRefersh"
+                            style="@style/AVLoadingIndicatorView"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/refresh"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/platform_emptyMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="!! there is no new user !!"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/plafromLL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingEnd="30dp">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="#1A00ADEF"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_toStartOf="@+id/reRl3"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/glasslogo" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/main"
+                            android:text="MoonX Platform"
+                            android:textColor="@color/third_color"
+                            android:textSize="18dp" />
+
+                        <TextView
+                            android:id="@+id/journalist_offline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/main"
+                            android:text="offline mode"
+                            android:textColor="@color/primary_color"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/reRl3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="16dp">
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/journalistAVI"
+                            style="@style/AVLoadingIndicatorView"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_centerInParent="true"
+                            android:visibility="visible"
+                            app:indicatorColor="#000"
+                            app:indicatorName="BallClipRotateMultipleIndicator" />
+
+                        <ImageView
+                            android:id="@+id/journalistRefersh"
+                            style="@style/AVLoadingIndicatorView"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/refresh"
+                            android:visibility="invisible" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/journalist_emptyMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="!! there is no new user !!"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/journalistLL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingEnd="30dp">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/mainRL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/newuser_btn_clickex"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/glasslogo" />
+
+        <RelativeLayout
+            android:layout_toStartOf="@+id/reRl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/appLogo">
+
+            <TextView
+                android:id="@+id/fullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/main"
+                android:textSize="16dp"
+                android:text="Full Name"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fullName"
+                android:layout_marginEnd="10dp"
+                android:text="+2012010213"
+                android:fontFamily="@font/main"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/reRl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="16dp">
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/avi"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                app:indicatorColor="#000"
+                app:indicatorName="LineSpinFadeLoaderIndicator" />
+
+            <ImageView
+                android:id="@+id/refreshImg"
+                style="@style/AVLoadingIndicatorView"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/done"
+                android:visibility="invisible" />
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

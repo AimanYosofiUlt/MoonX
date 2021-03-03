@@ -1,6 +1,8 @@
 package com.ewu.moonx.Pojo.DB.Template;
 
-public class Users {
+import java.io.Serializable;
+
+public class Users implements Serializable {
     String id,firstName, secondName,thirdName,phone,type;
     int signCount;
 
