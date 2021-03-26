@@ -12,7 +12,8 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
-import com.ewu.moonx.Pojo.DB.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
+import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.LoginPkj.Login_DoneActivity;
 
@@ -28,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+//        DB.delete(new PublicMessagesTable(this)).exec();
         init();
     }
 
@@ -71,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
         UsersTable users = new UsersTable(this);
         Cursor cursor = DB.select(users.allowUserCol).from(users).start();
         cursor.moveToNext();
-        return cursor.getString(0).equals(users.hisAllowed);
+        return cursor.getString(0).equals(users.hisAllowed_WithImg);
     }
 
     private boolean isAdminType() {

@@ -17,11 +17,14 @@
             android:src="@drawable/add_req_btn_back" />
 
         <RelativeLayout
+            android:id="@+id/addRequestBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="20dp"
             android:background="@drawable/add_request_glass_btn"
+            android:clickable="true"
+            android:focusable="true"
             android:padding="12dp">
 
             <ImageView

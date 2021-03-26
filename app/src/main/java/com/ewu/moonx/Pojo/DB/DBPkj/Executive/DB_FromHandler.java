@@ -1,6 +1,6 @@
 package com.ewu.moonx.Pojo.DB.DBPkj.Executive;
 
-import com.ewu.moonx.Pojo.DB.DataBase;
+import com.ewu.moonx.Pojo.DB.Tables.DataBase;
 
 public class DB_FromHandler extends DB_SingleFromHandler {
 

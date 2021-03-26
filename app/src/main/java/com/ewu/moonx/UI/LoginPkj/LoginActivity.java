@@ -16,9 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.dd.processbutton.iml.ActionProcessButton;
-import com.ewu.moonx.App.PublicVariable;
+import com.ewu.moonx.App.Static;
 import com.ewu.moonx.App.Status;
-import com.ewu.moonx.R;
 import com.ewu.moonx.R;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
@@ -123,14 +122,14 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (loginBtn.getProgress() != PublicVariable.LOADING) {
+                if (loginBtn.getProgress() != Static.LOADING) {
 
-                    setStateInLoading(PublicVariable.NORMAL);
+                    setStateInLoading(Static.NORMAL);
 
                     boolean isNetConnected = Status.isNetConnected(LoginActivity.this), isAllInfoEntered = isAllInfoEntered();
 
                     if (isNetConnected && isAllInfoEntered) {
-                        setStateInLoading(PublicVariable.LOADING);
+                        setStateInLoading(Static.LOADING);
                         VerifyPhone();
                     } else {
                         if (!isAllInfoEntered)
@@ -170,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
             private void setStateInLoading(int state) {
                 loginBtn.setProgress(state);
 
-                if (state == PublicVariable.LOADING) {
+                if (state == Static.LOADING) {
                     firstNameED.setEnabled(false);
                     secondNameED.setEnabled(false);
                     thirdNameED.setEnabled(false);
@@ -224,12 +223,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCodeSent(@NonNull String verificationId, @NonNull PhoneAuthProvider.ForceResendingToken token) {
                         Intent AuthIntent = new Intent(LoginActivity.this, Login_VerifyActivity.class);
 
-                        AuthIntent.putExtra(PublicVariable.VERIFICATION_ID, verificationId);
-                        AuthIntent.putExtra(PublicVariable.TOKEN, token);
-                        AuthIntent.putExtra(PublicVariable.FIRST_NAME, firstNameED.getText().toString().trim());
-                        AuthIntent.putExtra(PublicVariable.SECOND_NAME, secondNameED.getText().toString().trim());
-                        AuthIntent.putExtra(PublicVariable.THIRD_NAME, thirdNameED.getText().toString().trim());
-                        AuthIntent.putExtra(PublicVariable.PHONE, getPhoneNumber());
+                        AuthIntent.putExtra(Static.VERIFICATION_ID, verificationId);
+                        AuthIntent.putExtra(Static.TOKEN, token);
+                        AuthIntent.putExtra(Static.FIRST_NAME, firstNameED.getText().toString().trim());
+                        AuthIntent.putExtra(Static.SECOND_NAME, secondNameED.getText().toString().trim());
+                        AuthIntent.putExtra(Static.THIRD_NAME, thirdNameED.getText().toString().trim());
+                        AuthIntent.putExtra(Static.PHONE, getPhoneNumber());
 
                         LoginActivity.this.startActivity(AuthIntent);
                         LoginActivity.this.finish();

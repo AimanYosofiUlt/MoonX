@@ -1,7 +1,7 @@
 package com.ewu.moonx.Pojo.DB.DBPkj.Executive;
 
 import com.ewu.moonx.Pojo.DB.DBPkj.Segments.DBColumn;
-import com.ewu.moonx.Pojo.DB.DataBase;
+import com.ewu.moonx.Pojo.DB.Tables.DataBase;
 
 public class DB_InsertHandler {
 

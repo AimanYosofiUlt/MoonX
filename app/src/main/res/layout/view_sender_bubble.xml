@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainRL"
+    android:layout_width="match_parent"
+    android:paddingTop="1dp"
+    android:paddingBottom="1dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/replay"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:alpha="0"
+        android:src="@drawable/reply" />
+
+
+    <LinearLayout
+        android:id="@+id/theView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="100dp"
+            android:paddingEnd="10dp">
+
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sender_bubble_background"
+                android:padding="8dp">
+
+                <TableRow>
+
+                    <FrameLayout
+                        android:id="@+id/replayFL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
+
+                    </FrameLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <FrameLayout
+                        android:id="@+id/contentFL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/replayFL"
+                        android:layout_margin="2dp">
+
+                    </FrameLayout>
+                </TableRow>
+            </TableLayout>
+
+            <ImageView
+                android:id="@+id/tale"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/bubble2"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/infoLayout"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="3dp"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/msgStatue"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="7dp"
+                    android:src="@drawable/msg_timer" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="35dp"
+                    android:fontFamily="@font/main"
+                    android:text="01:09 PM"
+                    android:textColor="@color/darkGray"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

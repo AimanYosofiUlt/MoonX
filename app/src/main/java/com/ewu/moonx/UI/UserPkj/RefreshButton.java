@@ -12,6 +12,7 @@ public class RefreshButton {
     AVLoadingIndicatorView avi;
     Activity con;
     RefreshButtonListener listener;
+    RefreshButton connectButton;
 
     public void setListener(RefreshButtonListener listener) {
         this.listener = listener;
@@ -32,21 +33,36 @@ public class RefreshButton {
 
     private void initEvent() {
         imageView.setOnClickListener(v -> {
-            avi.setVisibility(View.VISIBLE);
-            imageView.setVisibility(View.INVISIBLE);
-            imageView.setEnabled(false);
-            avi.animate().alpha(1);
+            startAnimation();
+            if (connectButton != null)
+                connectButton.startAnimation();
 
             listener.onClick();
         });
+    }
+
+    public void startAnimation() {
+        avi.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.INVISIBLE);
+        imageView.setEnabled(false);
+        avi.animate().alpha(1);
+    }
+
+    public void setConnectButton(RefreshButton connectButton) {
+        this.connectButton = connectButton;
     }
 
     public ImageView geRefreshImg() {
         return imageView;
     }
 
-
     public void done(boolean hasError) {
+        if (connectButton != null)
+            connectButton.startDone(hasError);
+        startDone(hasError);
+    }
+
+    private void startDone(boolean hasError) {
         avi.animate().alpha(0).withEndAction(new Runnable() {
             @Override
             public void run() {

@@ -10,21 +10,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/add_req_btn_back" />
+            android:src="@drawable/add_req_btn_back"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/startChatTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/main"
+            android:text="Start Chat"
+            android:textColor="@color/third_color"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <RelativeLayout
+            android:id="@+id/shareAppBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_margin="20dp"
             android:background="@drawable/add_request_glass_btn"
-            android:padding="12dp">
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="12dp"
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="15dp"
@@ -47,7 +67,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/main"
-                android:text="SHARE AN APP"
+                android:text="SHARE THE APPS"
                 android:textColor="@color/primary_color"
                 android:textSize="16sp"
                 android:textStyle="bold" />

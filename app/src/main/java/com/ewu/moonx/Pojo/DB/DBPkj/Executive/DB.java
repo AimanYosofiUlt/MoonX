@@ -1,5 +1,7 @@
 package com.ewu.moonx.Pojo.DB.DBPkj.Executive;
+
 import com.ewu.moonx.Pojo.DB.DBPkj.Segments.DBColumn;
+import com.ewu.moonx.Pojo.DB.Tables.DataBase;
 
 public class DB {
     private static String dbStr;
@@ -10,6 +12,7 @@ public class DB {
     public static final String UPDATE_STMT = "UPDATE";
     public static final String SELECT_STMT = "SELECT";
     public static final String INSERT_STMT = "INSERT";
+    public static final String DELETE_STMT = "DELETE";
 
     static void addToStatement(String str) {
         dbStr += str;
@@ -22,6 +25,10 @@ public class DB {
     public static void addInsertStr(String column, String val) {
         insertColsStr += " ," + column;
         insertValuesStr += " ," + val;
+    }
+
+    public static String getDbStr() {
+        return dbStr;
     }
 
     public static String getUpdateStr() {
@@ -53,13 +60,13 @@ public class DB {
     }
 
     public static DB_SingleSelectHandler selectMax(DBColumn column) {
-        dbStr = "Select Max(" + column + ") ";
+        dbStr = "Select Max(" + column.getName() + ") ";
         sqlStmtType = SELECT_STMT;
         return new DB_SingleSelectHandler();
     }
 
     public static DB_SingleSelectHandler selectCount(DBColumn column) {
-        dbStr = "Select Count(" + column + ") ";
+        dbStr = "Select Count(" + column.getName() + ") ";
         sqlStmtType = SELECT_STMT;
         return new DB_SingleSelectHandler();
     }
@@ -81,14 +88,24 @@ public class DB {
     public static DB_UpdateHandler set(DBColumn col, String val) {
         updateStr = col.getColName() + " = '" + val + "'";
         sqlStmtType = UPDATE_STMT;
-        dbStr ="";
+        dbStr = "";
         return new DB_UpdateHandler();
     }
 
     public static DB_UpdateHandler set(DBColumn col, double val) {
         updateStr = col.getColName() + " = " + val;
         sqlStmtType = UPDATE_STMT;
-        dbStr ="";
+        dbStr = "";
         return new DB_UpdateHandler();
+    }
+
+    public static DB_DeleteHandler delete(DataBase dataBase) {
+        dbStr = "DELETE FROM " + dataBase.getTableName();
+        sqlStmtType = DELETE_STMT;
+        return new DB_DeleteHandler(dataBase);
+    }
+
+    public static String getSqlStmtType() {
+        return sqlStmtType;
     }
 }

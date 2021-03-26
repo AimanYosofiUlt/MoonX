@@ -47,6 +47,6 @@ public class Status {
     public static void showErrorMessage(Context context, ActionProcessButton button, String message) {
         startShowBalloonMessage(context, button, context.getString(R.string.try_again));
         button.setErrorText(message);
-        button.setProgress(PublicVariable.ERROR);
+        button.setProgress(Static.ERROR);
     }
 }

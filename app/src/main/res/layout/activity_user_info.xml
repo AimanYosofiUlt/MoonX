@@ -23,7 +23,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_margin="20dp"
-            android:src="@drawable/person"
+            android:src="@drawable/moonx_img"
             app:civ_border_color="#0D00ADEF"
             app:civ_border_width="10dp" />
 

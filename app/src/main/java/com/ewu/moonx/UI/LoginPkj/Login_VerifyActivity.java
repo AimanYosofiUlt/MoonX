@@ -14,13 +14,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.ewu.moonx.App.Firebase;
-import com.ewu.moonx.App.PublicVariable;
+import com.ewu.moonx.App.Static;
 import com.ewu.moonx.App.Status;
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
-import com.ewu.moonx.Pojo.DB.Template.OldAccount;
-import com.ewu.moonx.Pojo.DB.Template.Str;
-import com.ewu.moonx.Pojo.DB.Template.Users;
-import com.ewu.moonx.Pojo.DB.UsersTable;
+import com.ewu.moonx.Pojo.DB.Models.OldAccount;
+import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
+import com.ewu.moonx.Pojo.DB.Models.Users;
+import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
+import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,13 +59,13 @@ public class Login_VerifyActivity extends AppCompatActivity {
 
     private void init() {
         mAuth = FirebaseAuth.getInstance();
-        token = ((PhoneAuthProvider.ForceResendingToken) getIntent().getSerializableExtra(PublicVariable.TOKEN));
-        verificationId = getIntent().getStringExtra(PublicVariable.VERIFICATION_ID);
+        token = ((PhoneAuthProvider.ForceResendingToken) getIntent().getSerializableExtra(Static.TOKEN));
+        verificationId = getIntent().getStringExtra(Static.VERIFICATION_ID);
 
-        firstName = getIntent().getStringExtra(PublicVariable.FIRST_NAME);
-        secondName = getIntent().getStringExtra(PublicVariable.SECOND_NAME);
-        thirdName = getIntent().getStringExtra(PublicVariable.THIRD_NAME);
-        phoneNumber = getIntent().getStringExtra(PublicVariable.PHONE);
+        firstName = getIntent().getStringExtra(Static.FIRST_NAME);
+        secondName = getIntent().getStringExtra(Static.SECOND_NAME);
+        thirdName = getIntent().getStringExtra(Static.THIRD_NAME);
+        phoneNumber = getIntent().getStringExtra(Static.PHONE);
 
         codeED = findViewById(R.id.codeED);
         verifyBtn = findViewById(R.id.verifyBtn);
@@ -99,7 +100,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
         verifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (verifyBtn.getProgress() != PublicVariable.LOADING)
+                if (verifyBtn.getProgress() != Static.LOADING)
                     if (isNeedConfig)
                         configuration();
                     else
@@ -154,7 +155,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
     }
 
     private void checkUserInFDB() {
-        Firebase.FireCloudRef(Str.Users).document(PublicVariable.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        Firebase.FireCloudRef(Str.Users).document(Static.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
@@ -181,8 +182,8 @@ public class Login_VerifyActivity extends AppCompatActivity {
     }
 
     private void sendRepeatedAccountNotify() {
-        String id = singedCount + "-" + PublicVariable.getUid();
-        OldAccount oldAccount = new OldAccount(PublicVariable.getUid(), Str.CMD_RepeatedAccount);
+        String id = singedCount + "-" + Static.getUid();
+        OldAccount oldAccount = new OldAccount(Static.getUid(), Str.CMD_RepeatedAccount);
         Firebase.FireCloudRef(Str.OldAccount).document(id).set(oldAccount)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -200,15 +201,16 @@ public class Login_VerifyActivity extends AppCompatActivity {
 
     private void sendUserInfoToFDB() {
         singedCount++;
-        Users user = new Users(PublicVariable.getUid()
+        Users user = new Users(Static.getUid()
                 , firstName
                 , secondName
                 , thirdName
                 , phoneNumber
                 , UsersTable.hisAdmin
-                , singedCount);
+                , singedCount
+                , "null");
 
-        Firebase.FireCloudRef(Str.TempUsers).document(PublicVariable.getUid()).set(user)
+        Firebase.FireCloudRef(Str.TempUsers).document(Static.getUid()).set(user)
                 .addOnSuccessListener(onSuccess())
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -230,7 +232,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
 
             private void saveInfoInDB() {
                 UsersTable users = new UsersTable(Login_VerifyActivity.this);
-                DB.insert(users.idCol, PublicVariable.getUid())
+                DB.insert(users.idCol, Static.getUid())
                         .insert(users.firstNameCol, firstName)
                         .insert(users.secondNameCol, secondName)
                         .insert(users.thirdNameCol, thirdName)
@@ -241,6 +243,8 @@ public class Login_VerifyActivity extends AppCompatActivity {
             }
 
             private void openActivity() {
+                DB.delete(new PublicMessagesTable(Login_VerifyActivity.this)).exec();
+
                 Intent intent = new Intent(Login_VerifyActivity.this, Login_DoneActivity.class);
                 startActivity(intent);
                 Login_VerifyActivity.this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);

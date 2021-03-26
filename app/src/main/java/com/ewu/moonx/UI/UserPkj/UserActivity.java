@@ -5,22 +5,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ewu.moonx.App.Firebase;
+import com.ewu.moonx.App.FirebaseOrderHandler;
+import com.ewu.moonx.App.Static;
 import com.ewu.moonx.App.Status;
-import com.ewu.moonx.Pojo.DB.Template.Str;
-import com.ewu.moonx.Pojo.DB.Template.Users;
+import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
+import com.ewu.moonx.Pojo.DB.Models.Users;
+import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,13 +29,15 @@ public class UserActivity extends AppCompatActivity {
 
     RefreshButton newUserRB, platfromRB, journalistRB;
     ArrayList<NewUserView> newUserViews;
-    ArrayList<UserShowView> UsersViews;
+    ArrayList<UserShowView> usersViews;
     TextView newUser_emptyMsg, newUser_offline;
     TextView platform_emptyMsg, platfrom_offline;
     TextView journalist_emptyMsg, journalist_offline;
 
     LinearLayout newUserLL, plafromLL, journalistLL;
+    RelativeLayout shareAppBtn;
     final int A_B = -1, B_A = 1, A_A = 0;
+    public static boolean isForUserChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,12 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void initEvent() {
-
+        shareAppBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(UserActivity.this, "Share App", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void init() {
@@ -65,114 +73,26 @@ public class UserActivity extends AppCompatActivity {
         newUserRB = new RefreshButton(this, R.id.newUserRefersh, R.id.newUserAVI);
         newUserRB.setListener(this::addNewUserFromFDB);
 
-        UsersViews = new ArrayList<>();
+        usersViews = new ArrayList<>();
         platfromRB = new RefreshButton(this, R.id.platfromRefersh, R.id.platformAVI);
-        platfromRB.setListener(this::odredTrain);
+        platfromRB.setListener(this::addUsersFromFDB);
 
         journalistRB = new RefreshButton(this, R.id.journalistRefersh, R.id.journalistAVI);
         journalistRB.setListener(this::addUsersFromFDB);
 
-        names = new ArrayList<>();
+        platfromRB.setConnectButton(journalistRB);
+        journalistRB.setConnectButton(platfromRB);
+
+        shareAppBtn = findViewById(R.id.shareAppBtn);
+
+        isForUserChat = getIntent().getBooleanExtra(Static.isForGetChatUser, false);
+        if (isForUserChat) {
+            findViewById(R.id.startChatTitle).setVisibility(View.VISIBLE);
+            shareAppBtn.setVisibility(View.GONE);
+        }
+
         addNewUserFromFDB();
-        odredTrain();
-    }
-
-    ArrayList<Name> names;
-
-    private void odredTrain() {
-
-        Firebase.FireCloudRef("Todel").get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        addUsersViews(queryDocumentSnapshots.getDocuments());
-                    }
-
-                    private void addUsersViews(List<DocumentSnapshot> documents) {
-
-                        Collections.sort(documents, new Comparator<DocumentSnapshot>() {
-                            @Override
-                            public int compare(DocumentSnapshot o1, DocumentSnapshot o2) {
-                                Name o1Name = o1.toObject(Name.class);
-                                Name o2Name = o2.toObject(Name.class);
-                                return o1Name.getName().compareToIgnoreCase(o2Name.getName());
-                            }
-                        });
-
-
-                        if (names.size() == 0) {
-                            for (DocumentSnapshot snapshot : documents) {
-                                Name name = snapshot.toObject(Name.class);
-                                addUser(name, names.size());
-                            }
-                        } else {
-                            int d = 0;
-                            for (DocumentSnapshot snapshot : documents) {
-                                boolean isNewUserBT = false;
-                                Name name = snapshot.toObject(Name.class);
-
-//                                if (names.size() < d) {
-//                                    addUser(name, names.size());
-//                                    d++;
-//                                    Toast.makeText(UserActivity.this, "Add " + d + "  " + names.size(), Toast.LENGTH_SHORT).show();
-//                                } else {
-
-                                while (names.size() > d) {
-                                    int compare = name.getName().compareTo(names.get(d).getName());
-                                    Toast.makeText(UserActivity.this, "" + d + "  " + names.size(), Toast.LENGTH_SHORT).show();
-                                    if (compare == 0) {
-                                        isNewUserBT = true;
-                                    } else if (compare < 0) {
-                                        addUser(name, d);
-                                        isNewUserBT = true;
-                                    } else if (compare > 0) {
-//                                        removeUser(d++);
-                                    }
-
-                                    d++;
-
-                                }
-//                                }
-                            }
-                        }
-
-                        platfromRB.done(false);
-                    }
-
-                    private void removeUser(int d) {
-                        names.add(names.get(d));
-                    }
-
-                    private void addUser(Name name, int index) {
-                        Users user = new Users("2", name.getName(), "", "", "", "", 0);
-                        UserShowView userView = new UserShowView(UserActivity.this, user);
-//                        names.add(index, name);
-                        plafromLL.addView(userView.getMainView(), index);
-
-                    }
-
-                    private int compare(Users user1, Users user2) {
-                        int compareFirstName = user1.getFirstName().compareTo(user2.getFirstName());
-                        if (compareFirstName == 0) {
-                            int compareThirdName = user1.getThirdName().compareTo(user2.getThirdName());
-                            if (compareThirdName == 0)
-                                return A_A;
-                            else if (compareThirdName < 0)
-                                return A_B;
-                            else
-                                return B_A;
-                        } else if (compareFirstName < 0)
-                            return A_B;
-                        else
-                            return B_A;
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    newUserRB.done(true);
-                    Status.startShowBalloonMessage(UserActivity.this, newUserRB.geRefreshImg(), getString(R.string.weak_internet_connection));
-                    if (newUserViews.isEmpty())
-                        newUser_emptyMsg.setVisibility(View.VISIBLE);
-                });
+        addUsersFromFDB();
     }
 
     private void addUsersFromFDB() {
@@ -188,71 +108,87 @@ public class UserActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (queryDocumentSnapshots.isEmpty()) {
-                            if (UsersViews.isEmpty())
-                                platform_emptyMsg.setVisibility(View.VISIBLE);
-                            platfromRB.done(false);
-                        } else {
-                            addUsersViews(queryDocumentSnapshots.getDocuments());
-                        }
+                        addUsersViews(queryDocumentSnapshots.getDocuments());
                     }
 
                     private void addUsersViews(List<DocumentSnapshot> documents) {
-                        platform_emptyMsg.setVisibility(View.GONE);
+                        FirebaseOrderHandler handler = new FirebaseOrderHandler(usersViews, documents);
 
-                        if (UsersViews.isEmpty()) {
-                            Users user = documents.get(0).toObject(Users.class);
-                            addUser(user, 0);
-                        }
-
-                        for (DocumentSnapshot snapshot : documents) {
-                            boolean isNeedAdd = true;
-                            Users newUser = snapshot.toObject(Users.class);
-                            for (int i = 0; i < UsersViews.size(); i++) {
-                                assert newUser != null;
-                                int state = compare(UsersViews.get(i).getUser(), newUser);
-                                if (state == A_A) {
-                                    isNeedAdd = false;
-                                    break;
-                                } else if (state == B_A) {
-                                    addUser(newUser, i);
-                                    isNeedAdd = false;
-                                    break;
-                                }
+                        handler.setListener(new FirebaseOrderHandler.OrderListener() {
+                            @Override
+                            public int onPreDocsOrder(DocumentSnapshot o1, DocumentSnapshot o2) {
+                                Users o1Users = o1.toObject(Users.class);
+                                Users o2Users = o2.toObject(Users.class);
+                                return startCompare(o1Users, o2Users);
                             }
 
-                            if (isNeedAdd)
-                                addUser(newUser, UsersViews.size());
+                            @Override
+                            public void onAdd(int firebaseIndex, int localIndex) {
+                                Users user = documents.get(firebaseIndex).toObject(Users.class);
+                                addUser(user, localIndex);
+                            }
+
+                            @Override
+                            public void onRemove(int localIndex) {
+                                removeUser(localIndex);
+                            }
+
+                            @Override
+                            public int onCompare(int firebaseIndex, int localIndex) {
+                                Users Fuser = documents.get(firebaseIndex).toObject(Users.class);
+                                Users Luser = usersViews.get(localIndex).getUser();
+                                return startCompare(Fuser, Luser);
+                            }
+                        }).startOrder();
+
+                        setEmptyMsgVisible();
+                        platfromRB.done(false);
+                    }
+
+                    private void setEmptyMsgVisible() {
+                        if (plafromLL.getChildCount() > 0) {
+                            platform_emptyMsg.setVisibility(View.GONE);
+                        } else {
+                            platform_emptyMsg.setVisibility(View.VISIBLE);
                         }
 
-                        platfromRB.done(false);
+                        if (journalistLL.getChildCount() > 0) {
+                            journalist_emptyMsg.setVisibility(View.GONE);
+                        } else {
+                            journalist_emptyMsg.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    private void removeUser(int localIndex) {
+                        String type = usersViews.get(localIndex).getUser().getType();
+                        if (type.equals(UsersTable.hisAdmin)) {
+                            plafromLL.removeView(usersViews.get(localIndex).getMainView());
+                        } else {
+                            journalistLL.removeView(usersViews.get(localIndex).getMainView());
+                        }
+                        usersViews.remove(localIndex);
+
                     }
 
                     private void addUser(Users user, int index) {
                         UserShowView userView = new UserShowView(UserActivity.this, user);
-                        UsersViews.add(index, userView);
-                        plafromLL.addView(userView.getMainView(), index);
-
+                        usersViews.add(index, userView);
+                        if (user.getType().equals(UsersTable.hisAdmin))
+                            plafromLL.addView(userView.getMainView(), index);
+                        else
+                            journalistLL.addView(userView.getMainView());
                     }
 
-                    private int compare(Users user1, Users user2) {
+                    private int startCompare(Users user1, Users user2) {
                         int compareFirstName = user1.getFirstName().compareTo(user2.getFirstName());
                         if (compareFirstName == 0) {
-                            int compareThirdName = user1.getThirdName().compareTo(user2.getThirdName());
-                            if (compareThirdName == 0)
-                                return A_A;
-                            else if (compareThirdName < 0)
-                                return A_B;
-                            else
-                                return B_A;
-                        } else if (compareFirstName < 0)
-                            return A_B;
-                        else
-                            return B_A;
+                            return user1.getThirdName().compareTo(user2.getThirdName());
+                        } else
+                            return compareFirstName;
                     }
                 })
                 .addOnFailureListener(e -> {
-                    newUserRB.done(true);
+                    platfromRB.done(true);
                     Status.startShowBalloonMessage(UserActivity.this, newUserRB.geRefreshImg(), getString(R.string.weak_internet_connection));
                     if (newUserViews.isEmpty())
                         newUser_emptyMsg.setVisibility(View.VISIBLE);
@@ -269,80 +205,78 @@ public class UserActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (queryDocumentSnapshots.isEmpty()) {
-                            if (newUserViews.isEmpty())
-                                newUser_emptyMsg.setVisibility(View.VISIBLE);
-                            newUserRB.done(false);
-                        } else {
-                            addNewUserViews(queryDocumentSnapshots.getDocuments());
-                        }
+                        addNewUserViews(queryDocumentSnapshots.getDocuments());
                     }
 
                     private void addNewUserViews(List<DocumentSnapshot> documents) {
                         newUser_emptyMsg.setVisibility(View.GONE);
 
-                        if (newUserViews.isEmpty()) {
-                            Users user = documents.get(0).toObject(Users.class);
-                            addUser(user, 0);
-                        }
+                        FirebaseOrderHandler handler = new FirebaseOrderHandler(newUserViews, documents);
 
-                        for (DocumentSnapshot snapshot : documents) {
-                            boolean isNeedAdd = true;
-                            Users newUser = snapshot.toObject(Users.class);
-                            for (int i = 0; i < newUserViews.size(); i++) {
-                                assert newUser != null;
-                                int state = compare(newUserViews.get(i).getUser(), newUser);
-                                if (state == A_A) {
-                                    isNeedAdd = false;
-                                    break;
-                                } else if (state == B_A) {
-                                    addUser(newUser, i);
-                                    isNeedAdd = false;
-                                    break;
-                                }
+                        handler.setListener(new FirebaseOrderHandler.OrderListener() {
+                            @Override
+                            public int onPreDocsOrder(DocumentSnapshot o1, DocumentSnapshot o2) {
+                                Users o1User = o1.toObject(Users.class);
+                                Users o2Users = o2.toObject(Users.class);
+                                return compare(o1User, o2Users);
                             }
 
-                            if (isNeedAdd)
-                                addUser(newUser, newUserViews.size());
-                        }
+                            @Override
+                            public void onAdd(int firebaseIndex, int localIndex) {
+                                Users user = documents.get(firebaseIndex).toObject(Users.class);
+                                NewUserView userView = new NewUserView(UserActivity.this, user);
+                                userView.setListener(view -> {
+                                    newUserViews.remove(view);
+                                    view.getMainView().animate().alpha(0).withEndAction(() -> {
+                                        newUserLL.removeView(view.getMainView());
+                                        if (newUserViews.isEmpty())
+                                            newUser_emptyMsg.setVisibility(View.VISIBLE);
+                                    });
 
+                                    newUserRB.startAnimation();
+                                    addUsersFromFDB();
+                                });
+                                newUserViews.add(localIndex, userView);
+                                newUserLL.addView(userView.getMainView(), localIndex);
+                            }
+
+                            @Override
+                            public void onRemove(int localIndex) {
+                                newUserLL.removeView(usersViews.get(localIndex).getMainView());
+                                newUserViews.remove(localIndex);
+                            }
+
+                            @Override
+                            public int onCompare(int firebaseIndex, int localIndex) {
+                                Users FUsers = documents.get(firebaseIndex).toObject(Users.class);
+                                Users LUsers = newUserViews.get(localIndex).getUser();
+                                return compare(FUsers, LUsers);
+                            }
+                        }).startOrder();
+
+                        setEmptyMsgVisible();
                         newUserRB.done(false);
                     }
 
-                    private void addUser(Users user, int index) {
-                        NewUserView userView = new NewUserView(UserActivity.this, user);
-                        userView.setListener(view -> {
-                            newUserViews.remove(view);
-                            view.getMainView().animate().alpha(0).withEndAction(() -> {
-                                newUserLL.removeView(view.getMainView());
-                                if (newUserViews.isEmpty())
-                                    newUser_emptyMsg.setVisibility(View.VISIBLE);
-                            });
-                        });
-                        newUserViews.add(index, userView);
-                        newUserLL.addView(userView.getMainView(), index);
+                    private void setEmptyMsgVisible() {
+                        if (newUserViews.isEmpty())
+                            newUser_emptyMsg.setVisibility(View.VISIBLE);
+                        else
+                            newUser_emptyMsg.setVisibility(View.GONE);
                     }
 
                     private int compare(Users user1, Users user2) {
-                        int compareFirstName = user1.getFirstName().compareTo(user2.getFirstName());
-                        if (compareFirstName == 0) {
-                            int compareSecondName = user1.getSecondName().compareTo((user2.getSecondName()));
-                            if (compareSecondName == 0) {
-                                int compareThirdName = user1.getThirdName().compareTo(user2.getThirdName());
-                                if (compareThirdName == 0)
-                                    return A_A;
-                                else if (compareThirdName < 0)
-                                    return A_B;
-                                else
-                                    return B_A;
-                            } else if (compareSecondName < 0)
-                                return A_B;
+                        int firstNameCompare = user1.getFirstName().compareTo(user2.getFirstName());
+                        if (firstNameCompare == 0) {
+
+                            int SecondNameCompare = user1.getSecondName().compareTo((user2.getSecondName()));
+                            if (SecondNameCompare == 0)
+                                return user1.getThirdName().compareTo(user2.getThirdName());
                             else
-                                return B_A;
-                        } else if (compareFirstName < 0)
-                            return A_B;
-                        else
-                            return B_A;
+                                return SecondNameCompare;
+
+                        } else
+                            return firstNameCompare;
                     }
                 })
                 .addOnFailureListener(e -> {

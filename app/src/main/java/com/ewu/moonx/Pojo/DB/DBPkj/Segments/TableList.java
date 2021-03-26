@@ -1,6 +1,6 @@
 package com.ewu.moonx.Pojo.DB.DBPkj.Segments;
 
-import com.ewu.moonx.Pojo.DB.DataBase;
+import com.ewu.moonx.Pojo.DB.Tables.DataBase;
 
 import java.util.ArrayList;
 

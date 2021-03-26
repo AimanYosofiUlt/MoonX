@@ -5,39 +5,42 @@
     android:background="@color/background_color">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:paddingBottom="75dp"
+         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:background="@drawable/fragment_back_wahitgradint"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/fragment_back_wahitgradint">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:padding="5dp"
-                android:background="@drawable/search_edittext_back">
+                android:background="@drawable/search_edittext_back"
+                android:padding="5dp">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="true"
+                    android:layout_marginBottom="10dp"
                     android:layout_toStartOf="@id/searchBtn"
                     android:background="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="10dp"
                     android:hint="Search" />
 
                 <ImageButton
                     android:id="@+id/searchBtn"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_margin="10dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
+                    android:layout_margin="10dp"
                     android:background="@color/white"
                     android:src="@drawable/ic_baseline_search_24" />
             </RelativeLayout>
@@ -45,9 +48,44 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/MessageLL"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/glass_title"
+                android:fontFamily="@font/main"
+                android:padding="5dp"
+                android:text="Public Message"
+                android:textAlignment="center"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/publicMsgLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/glass_title"
+                android:fontFamily="@font/main"
+                android:padding="5dp"
+                android:text="Users Message"
+                android:textAlignment="center"
+                android:textSize="12dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/usersMsgLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
 
     </LinearLayout>
 

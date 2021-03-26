@@ -1,6 +1,6 @@
 package com.ewu.moonx.Pojo.DB.DBPkj.Executive;
 
-import com.ewu.moonx.Pojo.DB.DataBase;
+import com.ewu.moonx.Pojo.DB.Tables.DataBase;
 
 public class DB_UpdateWhereHandler {
     DataBase dataBase;
@@ -19,6 +19,6 @@ public class DB_UpdateWhereHandler {
     }
 
     public void start() {
-        dataBase.execSql("Update " + dataBase.getTableName() + " Set "  );
+        dataBase.execSql("Update " + dataBase.getTableName() + " Set "  +DB.getUpdateStr());
     }
 }
