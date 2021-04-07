@@ -1,6 +1,5 @@
 package com.ewu.moonx.UI.FollowUpPkj.ChatPkj;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,13 +18,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.ewu.moonx.App.Static;
+import com.ewu.moonx.App.Status;
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DBOrder;
 import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
+import com.ewu.moonx.Pojo.DB.Models.UserMessages;
+import com.ewu.moonx.Pojo.DB.Models.Users;
 import com.ewu.moonx.Pojo.DB.Tables.MessageTable;
 import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
+import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
+import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.ChatViewPkj.AdminUserChatView;
 import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.ChatViewPkj.PublicUserChatView;
+import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.ChatViewPkj.UserChatView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -34,9 +39,10 @@ public class ChatFragment extends Fragment {
 
     Activity context;
     View mainView;
-    LinearLayout publicMsgLL;
+    LinearLayout publicMsgLL, usersMsgLL;
     BroadcastReceiver broadcastReceiver;
     ArrayList<PublicUserChatView> publicUserViews;
+    ArrayList<AdminUserChatView> adminUsersViews;
 
     public ChatFragment(Activity context) {
         this.context = context;
@@ -94,7 +100,7 @@ public class ChatFragment extends Fragment {
 
 
         };
-        context.registerReceiver(broadcastReceiver, new IntentFilter(getString(R.string.receiveMessageBroadCast)));
+        context.registerReceiver(broadcastReceiver, new IntentFilter(getString(R.string.receive_PublicMessageBroadCast)));
     }
 
     private void addToLayout(PublicUserChatView publicUserView) {
@@ -112,30 +118,61 @@ public class ChatFragment extends Fragment {
 
     private void init() {
         publicMsgLL = mainView.findViewById(R.id.publicMsgLL);
+        usersMsgLL = mainView.findViewById(R.id.usersMsgLL);
         publicUserViews = new ArrayList<>();
     }
 
     private void selectLastMessages() {
         SelectLastPublicMessages();
+        SelectLastUserMessages();
     }
 
-    @SuppressLint("SetTextI18n")
+    private void SelectLastUserMessages() {
+        MessageTable table = new MessageTable(context);
+
+        Cursor chatCursor = DB.selectAll().from(table).
+                groubBy(table.senderUidCol).groubBy(table.receiverUidCol).
+                orderByMax(table.dateCol, DBOrder.DESC).start();
+
+        chatCursor.close();
+
+        Cursor userCursor = DB.selectAll().from(new UsersTable(context)).start();
+        if (userCursor.getCount() > 0) {
+            while (userCursor.moveToNext()) {
+                Users user = new Users();
+                user.setId(userCursor.getString(0));
+                user.setFirstName(userCursor.getString(1));
+                user.setSecondName(userCursor.getString(2));
+                user.setThirdName(userCursor.getString(3));
+                user.setPhone(userCursor.getString(4));
+                user.setImageName(userCursor.getString(5));
+                user.setType(userCursor.getString(6));
+                AdminUserChatView chatView = new AdminUserChatView(context, user, new UserMessages());
+
+                if (!user.getId().equals(Static.getUid()))
+                    usersMsgLL.addView(chatView.getMainView());
+
+            }
+        }
+        userCursor.close();
+    }
+
     private void SelectLastPublicMessages() {
         PublicMessagesTable table = new PublicMessagesTable(context);
-        Cursor chatCursor = DB.selectAll().from(table).groubBy(table.userIdCol).orderByMax(table.dateCol, DBOrder.DESC).start();
-        assert chatCursor != null;
+        Cursor publicChatCursor = DB.selectAll().from(table).groubBy(table.userIdCol).orderByMax(table.dateCol, DBOrder.DESC).start();
+        assert publicChatCursor != null;
 
-        while (chatCursor.moveToNext()) {
+        while (publicChatCursor.moveToNext()) {
             try {
                 PublicMessages publicMessage = new PublicMessages(
-                        chatCursor.getString(0),
-                        chatCursor.getString(1),
-                        chatCursor.getString(2),
-                        chatCursor.getString(3),
-                        Static.getDate(chatCursor.getString(4))
-                        , chatCursor.getString(6));
+                        publicChatCursor.getString(0),
+                        publicChatCursor.getString(1),
+                        publicChatCursor.getString(2),
+                        publicChatCursor.getString(3),
+                        Static.getDate(publicChatCursor.getString(4))
+                        , publicChatCursor.getString(6));
 
-                PublicUserChatView userChatView = new PublicUserChatView(context, publicMessage, chatCursor.getString(5));
+                PublicUserChatView userChatView = new PublicUserChatView(context, publicMessage, publicChatCursor.getString(5));
                 addToLayout(userChatView);
 
             } catch (ParseException e) {
@@ -143,7 +180,7 @@ public class ChatFragment extends Fragment {
             }
 
         }
-        chatCursor.close();
+        publicChatCursor.close();
     }
 
     @Override

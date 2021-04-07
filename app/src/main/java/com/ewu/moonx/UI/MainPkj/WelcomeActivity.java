@@ -1,11 +1,15 @@
 package com.ewu.moonx.UI.MainPkj;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +36,7 @@ public class WelcomeActivity extends AppCompatActivity {
         initEvent();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initEvent() {
         findViewById(R.id.loginBtn).setOnClickListener(view -> {
             int width = findViewById(R.id.parentL).getWidth() - findViewById(R.id.bottomImg).getWidth();
@@ -45,6 +50,15 @@ public class WelcomeActivity extends AppCompatActivity {
                     WelcomeActivity.this.finish();
                 }
             });
+        });
+
+        findViewById(R.id.loginBtn).setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                findViewById(R.id.loginBtn).setBackgroundColor(getResources().getColor(R.color.third_color));
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                findViewById(R.id.loginBtn).setBackgroundColor(getResources().getColor(R.color.selectColor));
+            }
+            return false;
         });
 
         findViewById(R.id.sendMsgsBtn).setOnClickListener(v -> {

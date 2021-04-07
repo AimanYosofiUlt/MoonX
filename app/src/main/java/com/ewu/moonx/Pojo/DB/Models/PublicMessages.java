@@ -3,10 +3,11 @@ package com.ewu.moonx.Pojo.DB.Models;
 import java.io.Serializable;
 import java.util.Date;
 
-public class PublicMessages implements Serializable {
-    String id, userId, userName, text;
-    Date date;
-    String replayMsgId;
+public class PublicMessages extends Messages  {
+    String  userId, userName;
+
+    public PublicMessages() {
+    }
 
     public PublicMessages(String id, String userId, String userName, String text, Date date, String replayMsgId) {
         this.id = id;
@@ -15,17 +16,6 @@ public class PublicMessages implements Serializable {
         this.text = text;
         this.date = date;
         this.replayMsgId = replayMsgId;
-    }
-
-    public PublicMessages() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getUserId() {
@@ -50,21 +40,5 @@ public class PublicMessages implements Serializable {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getReplayMsgId() {
-        return replayMsgId;
-    }
-
-    public void setReplayMsgId(String replayMsgId) {
-        this.replayMsgId = replayMsgId;
     }
 }

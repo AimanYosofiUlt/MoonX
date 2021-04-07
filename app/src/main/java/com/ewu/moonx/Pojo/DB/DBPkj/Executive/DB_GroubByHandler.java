@@ -8,6 +8,11 @@ import com.ewu.moonx.Pojo.DB.Tables.DataBase;
 public class DB_GroubByHandler extends OrderCode {
     private final DataBase dataBase;
 
+    public DB_GroubByHandler groubBy(DBColumn column) {
+        DB.addToStatement(" , " + column.getName());
+        return new DB_GroubByHandler(dataBase);
+    }
+
     public DB_GroubByHandler(DataBase dataBase) {
         super(dataBase);
         this.dataBase = dataBase;

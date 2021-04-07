@@ -21,7 +21,7 @@ import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
 import com.ewu.moonx.Pojo.DB.Models.UserConfig;
 import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.MainPkj.StartPublicChattingHandler;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -57,7 +57,7 @@ public class Login_DoneActivity extends AppCompatActivity {
     }
 
     private boolean isUserAllowed() {
-        UsersTable users = new UsersTable(this);
+        SettingTable users = new SettingTable(this);
         Cursor cursor = DB.select(users.allowUserCol).from(users).start();
         cursor.moveToNext();
         return cursor.getString(0).equals(users.hisAllowed_WithoutImg);
@@ -134,10 +134,10 @@ public class Login_DoneActivity extends AppCompatActivity {
         if (userConfig.getUid().equals(Static.getUid())) {
             Intent intent = new Intent(Login_DoneActivity.this, Login_setUserImgActivity.class);
 
-            UsersTable usersTable = new UsersTable(Login_DoneActivity.this);
+            SettingTable userTable = new SettingTable(Login_DoneActivity.this);
 
-            DB.set(usersTable.typeCol, userConfig.getType())
-                    .set(usersTable.allowUserCol, usersTable.hisAllowed_WithoutImg).update(usersTable).exec();
+            DB.set(userTable.typeCol, userConfig.getType())
+                    .set(userTable.allowUserCol, userTable.hisAllowed_WithoutImg).update(userTable).exec();
             DB.delete(new PublicMessagesTable(Login_DoneActivity.this)).exec();
 
             Login_DoneActivity.this.startActivity(intent);
@@ -177,9 +177,9 @@ public class Login_DoneActivity extends AppCompatActivity {
     private void startChatting() {
         StartPublicChattingHandler handler = new StartPublicChattingHandler(this);
 
-        UsersTable usersTable = new UsersTable(this);
+        SettingTable userTable = new SettingTable(this);
 
-        Cursor cursor = DB.select(usersTable.firstNameCol).select(usersTable.thirdNameCol).from(usersTable).start();
+        Cursor cursor = DB.select(userTable.firstNameCol).select(userTable.thirdNameCol).from(userTable).start();
         cursor.moveToNext();
         String name = cursor.getString(0) + " " + cursor.getString(1);
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainChatRL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
@@ -35,6 +36,7 @@
                 android:orientation="vertical"
                 android:paddingTop="16dp" />
 
+
             <FrameLayout
                 android:id="@+id/space"
                 android:layout_width="match_parent"
@@ -42,7 +44,40 @@
         </LinearLayout>
     </ScrollView>
 
-    <include android:id="@+id/chatEditTextLayout"
+    <FrameLayout
+        android:id="@+id/foucsL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/noneColor"
+        android:touchscreenBlocksFocus="false"
+        android:visibility="gone" />
+
+    <include layout="@layout/view_chat_edit_option" />
+
+    <include
+        android:id="@+id/chatEditTextLayout"
         layout="@layout/activity_chat_message_edittext" />
 
+    <ImageView
+        android:id="@+id/recordBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="19dp"
+        android:background="@drawable/round_btn_outclick"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@drawable/microphone" />
+
+    <FrameLayout
+        android:id="@+id/foucsL2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/noneColor"
+        android:touchscreenBlocksFocus="false"
+        android:visibility="gone" />
 </RelativeLayout>

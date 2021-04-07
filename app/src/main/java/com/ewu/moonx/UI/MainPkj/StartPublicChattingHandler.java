@@ -13,10 +13,10 @@ import com.ewu.moonx.App.Firebase;
 import com.ewu.moonx.App.Static;
 import com.ewu.moonx.App.Status;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.ChatActivity;
-import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj.PublicChatService;
+import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.PublicService.PublicChatService;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.BufferedReader;
@@ -132,7 +132,7 @@ public class StartPublicChattingHandler {
     private void showChatActivity() {
         if (!PublicChatService.isRunning) {
             Intent serIntent = new Intent(activity, PublicChatService.class);
-            serIntent.putExtra(Static.UserType,UsersTable.hisPublic);
+            serIntent.putExtra(Static.UserType, SettingTable.hisPublic);
             serIntent.putExtra(Static.UserId,id);
             activity.startService(serIntent);
         }
@@ -143,7 +143,7 @@ public class StartPublicChattingHandler {
         intent.putExtra(Static.isPublicMsg, true);
         intent.putExtra(Static.UserId, id);
         intent.putExtra(Static.UserName, name);
-        intent.putExtra(Static.UserType, UsersTable.hisPublic);
+        intent.putExtra(Static.UserType, SettingTable.hisPublic);
         activity.startActivity(intent);
     }
 }

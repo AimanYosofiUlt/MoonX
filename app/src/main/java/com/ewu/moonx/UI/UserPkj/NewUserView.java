@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,7 @@ import com.ewu.moonx.App.Status;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
 import com.ewu.moonx.Pojo.DB.Models.UserConfig;
 import com.ewu.moonx.Pojo.DB.Models.Users;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -105,7 +104,7 @@ public class NewUserView extends CustomView {
             }
 
             private void blockUser() {
-                UserConfig userConfig = new UserConfig(user.getId(), UsersTable.hisBlock);
+                UserConfig userConfig = new UserConfig(user.getId(), SettingTable.hisBlock);
                 Firebase.FireCloudRef(Str.UsersConf).document(user.getId()).set(userConfig)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override

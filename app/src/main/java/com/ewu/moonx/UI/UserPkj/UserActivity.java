@@ -2,7 +2,11 @@ package com.ewu.moonx.UI.UserPkj;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -13,13 +17,17 @@ import com.ewu.moonx.App.Firebase;
 import com.ewu.moonx.App.FirebaseOrderHandler;
 import com.ewu.moonx.App.Static;
 import com.ewu.moonx.App.Status;
+import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
 import com.ewu.moonx.Pojo.DB.Models.Users;
+import com.ewu.moonx.Pojo.DB.Tables.MessageTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +47,8 @@ public class UserActivity extends AppCompatActivity {
     final int A_B = -1, B_A = 1, A_A = 0;
     public static boolean isForUserChat;
 
+    HandlerThread handlerThread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +56,8 @@ public class UserActivity extends AppCompatActivity {
         init();
         initEvent();
         Objects.requireNonNull(getSupportActionBar()).hide();
+        handlerThread = new HandlerThread("UserActivityThread");
+        handlerThread.start();
     }
 
     private void initEvent() {
@@ -108,7 +120,98 @@ public class UserActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        addUsersViews(queryDocumentSnapshots.getDocuments());
+
+                        new Handler(handlerThread.getLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                addUsersViews(queryDocumentSnapshots.getDocuments());
+                                checkDataBase();
+                            }
+
+                            private void checkDataBase() {
+                                UsersTable table = new UsersTable(UserActivity.this);
+
+                                Cursor orderCursor = DB.selectAll().from(table).orderBy(table.firstNameCol).orderBy(table.secondNameCol).start();
+                                if (orderCursor.getCount() > 0) {
+                                    orderDB(orderCursor);
+                                } else {
+                                    addToDataBase();
+                                }
+                                orderCursor.close();
+                            }
+
+                            private void orderDB(Cursor orderCursor) {
+                                UsersTable table = new UsersTable(UserActivity.this);
+
+                                ArrayList<Users> tempUserList = new ArrayList<>();
+                                for (UserShowView usersView : usersViews) {
+                                    tempUserList.add(usersView.getUser());
+                                }
+
+                                while (orderCursor.moveToNext()) {
+                                    Users removedUser = null;
+                                    for (Users user : tempUserList) {
+                                        if (user.getId().equals(orderCursor.getString(0))) {
+                                            removedUser = user;
+                                            DB.set(table.firstNameCol, user.getFirstName())
+                                                    .set(table.secondNameCol, user.getSecondName())
+                                                    .set(table.thirdNameCol, user.getThirdName())
+                                                    .set(table.imageName, user.getImageName())
+                                                    .set(table.statueCol, UsersTable.IsNormal)
+                                                    .update(table)
+                                                    .where(table.idCol, user.getId()).exec();
+                                        }
+                                    }
+
+                                    if (removedUser != null) {
+                                        tempUserList.remove(removedUser);
+                                        removeUserInDB(orderCursor.getString(0));
+                                    }
+                                }
+
+                                for (Users user : tempUserList) {
+                                    startAddToDB(user);
+                                }
+
+                            }
+
+                            private void removeUserInDB(String userId) {
+                                MessageTable messageTable = new MessageTable(UserActivity.this);
+                                Cursor mesCursor = DB.select(messageTable.idCol).from(messageTable)
+                                        .where(messageTable.senderUidCol, userId).or.where(messageTable.receiverUidCol, userId).start();
+                                if (mesCursor.getCount() > 0) {
+                                    mesCursor.close();
+                                    setUserVartualDeleted();
+                                    return;
+                                }
+                                mesCursor.close();
+
+                                // TODO: 3/31/21 Add Requset chack to remove user as vartual user and meybe the link shares
+                            }
+
+                            private void setUserVartualDeleted() {
+
+                            }
+
+                            private void addToDataBase() {
+                                for (UserShowView usersView : usersViews) {
+                                    Users user = usersView.getUser();
+                                    startAddToDB(user);
+                                }
+                            }
+
+                            private void startAddToDB(Users user) {
+                                UsersTable table = new UsersTable(UserActivity.this);
+                                DB.insert(table.idCol, user.getId())
+                                        .insert(table.firstNameCol, user.getFirstName())
+                                        .insert(table.secondNameCol, user.getSecondName())
+                                        .insert(table.thirdNameCol, user.getThirdName())
+                                        .insert(table.phoneCol, user.getPhone())
+                                        .insert(table.typeCol, user.getType())
+                                        .insert(table.imageName, user.getImageName())
+                                        .inTo(table);
+                            }
+                        });
                     }
 
                     private void addUsersViews(List<DocumentSnapshot> documents) {
@@ -146,25 +249,30 @@ public class UserActivity extends AppCompatActivity {
                     }
 
                     private void setEmptyMsgVisible() {
-                        if (plafromLL.getChildCount() > 0) {
-                            platform_emptyMsg.setVisibility(View.GONE);
-                        } else {
-                            platform_emptyMsg.setVisibility(View.VISIBLE);
-                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (plafromLL.getChildCount() > 0) {
+                                    platform_emptyMsg.setVisibility(View.GONE);
+                                } else {
+                                    platform_emptyMsg.setVisibility(View.VISIBLE);
+                                }
 
-                        if (journalistLL.getChildCount() > 0) {
-                            journalist_emptyMsg.setVisibility(View.GONE);
-                        } else {
-                            journalist_emptyMsg.setVisibility(View.VISIBLE);
-                        }
+                                if (journalistLL.getChildCount() > 0) {
+                                    journalist_emptyMsg.setVisibility(View.GONE);
+                                } else {
+                                    journalist_emptyMsg.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
                     }
 
                     private void removeUser(int localIndex) {
                         String type = usersViews.get(localIndex).getUser().getType();
-                        if (type.equals(UsersTable.hisAdmin)) {
-                            plafromLL.removeView(usersViews.get(localIndex).getMainView());
+                        if (type.equals(SettingTable.hisAdmin)) {
+                            runOnUiThread(() -> plafromLL.removeView(usersViews.get(localIndex).getMainView()));
                         } else {
-                            journalistLL.removeView(usersViews.get(localIndex).getMainView());
+                            runOnUiThread(() -> journalistLL.removeView(usersViews.get(localIndex).getMainView()));
                         }
                         usersViews.remove(localIndex);
 
@@ -173,10 +281,10 @@ public class UserActivity extends AppCompatActivity {
                     private void addUser(Users user, int index) {
                         UserShowView userView = new UserShowView(UserActivity.this, user);
                         usersViews.add(index, userView);
-                        if (user.getType().equals(UsersTable.hisAdmin))
-                            plafromLL.addView(userView.getMainView(), index);
+                        if (user.getType().equals(SettingTable.hisAdmin))
+                            runOnUiThread(() -> plafromLL.addView(userView.getMainView(), index));
                         else
-                            journalistLL.addView(userView.getMainView());
+                            runOnUiThread(() -> journalistLL.addView(userView.getMainView()));
                     }
 
                     private int startCompare(Users user1, Users user2) {
@@ -191,7 +299,7 @@ public class UserActivity extends AppCompatActivity {
                     platfromRB.done(true);
                     Status.startShowBalloonMessage(UserActivity.this, newUserRB.geRefreshImg(), getString(R.string.weak_internet_connection));
                     if (newUserViews.isEmpty())
-                        newUser_emptyMsg.setVisibility(View.VISIBLE);
+                        runOnUiThread(() -> newUser_emptyMsg.setVisibility(View.VISIBLE));
                 });
     }
 
@@ -287,5 +395,10 @@ public class UserActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handlerThread.quit();
+    }
 }
 

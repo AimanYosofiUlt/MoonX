@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:background="@drawable/chatbar_background"
-    android:paddingLeft="16dp"
-    android:paddingTop="10dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="10dp">
+    android:background="@drawable/chatbar_background">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingTop="10dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/editTextBackground"
@@ -53,7 +53,8 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="16dp"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/msgED_options"
@@ -85,14 +86,10 @@
 
 
                     <ImageView
-                        android:id="@+id/recordBtn"
+                        android:id="@+id/record_space"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/round_btn"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="10dp"
-                        android:src="@drawable/microphone" />
+                        android:padding="10dp" />
 
 
                     <ImageView
@@ -107,8 +104,55 @@
                         android:visibility="gone" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/recordCancleTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="100dp"
+                    android:alpha="0"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/main"
+                        android:text="@string/slid_to_cancle"
+                        android:textColor="@color/third_color"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/recordTimeL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:alpha="0"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/circleFlash"
+                        android:layout_width="10dp"
+                        android:layout_height="match_parent"
+                        android:src="#CF1313" />
+
+                    <TextView
+                        android:id="@+id/recordTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/main"
+                        android:text="00:00"
+                        android:textColor="@color/third_color"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
             </RelativeLayout>
         </LinearLayout>
     </RelativeLayout>
-
 </FrameLayout>

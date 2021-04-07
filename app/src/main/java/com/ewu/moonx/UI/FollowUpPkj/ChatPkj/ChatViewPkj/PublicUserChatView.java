@@ -11,7 +11,7 @@ import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
 import com.ewu.moonx.Pojo.DB.Tables.MessageTable;
 import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.ChatActivity;
 
@@ -31,7 +31,7 @@ public class PublicUserChatView extends UserChatView {
         intent.putExtra(Static.isPublicMsg, true);
         intent.putExtra(Static.UserId, message.getUserId());
         intent.putExtra(Static.UserName, message.getUserName());
-        intent.putExtra(Static.UserType, UsersTable.hisEmpAdmin);
+        intent.putExtra(Static.UserType, SettingTable.hisEmpAdmin);
         mesCount = 0;
         _f(R.id.mesCount).setVisibility(View.GONE);
         con.startActivity(intent);
@@ -40,7 +40,8 @@ public class PublicUserChatView extends UserChatView {
     @Override
     public void setCountVisibility() {
         PublicMessagesTable table = new PublicMessagesTable(con);
-        Cursor cursor = DB.selectCount(table.statueCol).from(table).where(table.statueCol, MessageTable.StUser_notRead).and.where(table.userIdCol, message.getUserId()).start();
+        Cursor cursor = DB.selectCount(table.statueCol).from(table)
+                .where(table.statueCol, MessageTable.StUser_notRead).and.where(table.userIdCol, message.getUserId()).start();
         cursor.moveToNext();
         mesCount = cursor.getInt(0);
         ((TextView) _f(R.id.mesCount)).setText(String.valueOf(mesCount));
@@ -50,10 +51,6 @@ public class PublicUserChatView extends UserChatView {
         else
             _f(R.id.mesCount).setVisibility(View.GONE);
 
-    }
-
-    public View getMainView() {
-        return mainView;
     }
 
     public void setMessage(PublicMessages message, String statue) {

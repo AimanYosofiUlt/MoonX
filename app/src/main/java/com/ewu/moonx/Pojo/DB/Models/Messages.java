@@ -1,22 +1,19 @@
 package com.ewu.moonx.Pojo.DB.Models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Messages {
-
-    String id,senderUid,receiverUid,content,type;
+public class Messages implements Serializable {
+    String id,text;
     Date date;
     String replayMsgId;
 
     public Messages() {
     }
 
-    public Messages(String id, String senderUid, String receiverUid, String content, String type, Date date, String replayMsgId) {
+    public Messages(String id, String text, Date date, String replayMsgId) {
         this.id = id;
-        this.senderUid = senderUid;
-        this.receiverUid = receiverUid;
-        this.content = content;
-        this.type = type;
+        this.text = text;
         this.date = date;
         this.replayMsgId = replayMsgId;
     }
@@ -29,36 +26,12 @@ public class Messages {
         this.id = id;
     }
 
-    public String getReceiverUid() {
-        return receiverUid;
+    public String getText() {
+        return text;
     }
 
-    public void setReceiverUid(String receiverUid) {
-        this.receiverUid = receiverUid;
-    }
-
-    public String getSenderUid() {
-        return senderUid;
-    }
-
-    public void setSenderUid(String senderUid) {
-        this.senderUid = senderUid;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Date getDate() {

@@ -1,20 +1,21 @@
-package com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj;
+package com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.UserService;
 
 import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
+import com.ewu.moonx.Pojo.DB.Models.UserMessages;
 
-public class SendPublicTracker {
-    PublicMessages message;
+public class SendUserTracker {
+    UserMessages message;
     int status;
 
     public static final int NOT_SENT = 0;
     public static final int ON_PROGRESS = 1;
 
-    public SendPublicTracker(PublicMessages message) {
+    public SendUserTracker(UserMessages message) {
         this.message = message;
         status = NOT_SENT;
     }
 
-    public PublicMessages getMessage() {
+    public UserMessages getMessage() {
         return message;
     }
 

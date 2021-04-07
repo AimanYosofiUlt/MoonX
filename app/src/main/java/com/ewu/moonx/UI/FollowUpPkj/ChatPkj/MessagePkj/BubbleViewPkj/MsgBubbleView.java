@@ -6,43 +6,29 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Message;
 import android.os.Vibrator;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.core.content.ContextCompat;
 
 import com.ewu.moonx.App.Static;
-import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.Models.Messages;
-import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
-import com.ewu.moonx.Pojo.DB.Models.Users;
-import com.ewu.moonx.Pojo.DB.Tables.MessageTable;
-import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.MessagePkj.MsgContentPkj.BM_Content;
-import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.MessagePkj.MsgContentPkj.BM_TextContent;
 
 import java.util.ArrayList;
 
 public abstract class MsgBubbleView extends BubbleView {
-    Users user;
-    Messages message;
-    PublicMessages publicMessage;
 
+    Messages message;
+    BM_Content content;
+
+    RelativeLayout infoLayout;
     FrameLayout contentFL;
     TextView time;
-    RelativeLayout infoLayout;
-    BM_Content content;
     ImageView tale;
 
     float dX;
@@ -57,22 +43,11 @@ public abstract class MsgBubbleView extends BubbleView {
         return selectedBubble;
     }
 
-    public MsgBubbleView(Activity con, int R_layout, short bubbleType, Users user, Messages message) {
+    public MsgBubbleView(Activity con, int R_layout, short bubbleType, Messages message) {
         super(con, R_layout, bubbleType);
-        this.user = user;
         this.message = message;
         setDateStr(message.getDate());
-        initInstance();
-    }
-
-    public MsgBubbleView(Activity con, int R_layout, short bubbleType, PublicMessages publicMessage) {
-        super(con, R_layout, bubbleType);
-        this.publicMessage = publicMessage;
-        setDateStr(publicMessage.getDate());
-        if (publicMessage.getReplayMsgId() != null) {
-            addPublicReplay();
-        }
-        initInstance();
+        init();
     }
 
     public static void clear() {
@@ -83,51 +58,25 @@ public abstract class MsgBubbleView extends BubbleView {
         _f(R.id.mainRL).setBackgroundColor(con.getResources().getColor(R.color.noneColor));
     }
 
-    protected final void addPublicReplay() {
-        PublicMessagesTable table = new PublicMessagesTable(con);
-        Cursor cursor = DB.select(table.idCol)
-                .select(table.userNameCol)
-                .select(table.statueCol)
-                .select(table.textCol)
-                .from(table).where(table.idCol, publicMessage.getReplayMsgId()).start();
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToNext();
-
-            ReplayView replayView = new ReplayView(con, cursor.getString(0)
-                    , ((cursor.getString(2).contains("Its"))) ? con.getString(R.string.You) : cursor.getString(1)
-                    , cursor.getString(3));
-
-            _l(R.id.replayFL).addView(replayView.getMainView());
-            _l(R.id.replayFL).setVisibility(View.VISIBLE);
-        }
-
-        cursor.close();
+    public void addReplayView(ReplayView replayView)
+    {
+        _l(R.id.replayFL).addView(replayView.getMainView());
+        _l(R.id.replayFL).setVisibility(View.VISIBLE);
     }
 
-    private void initInstance() {
+    private void init() {
         if (selectedBubble == null)
             selectedBubble = new ArrayList<>();
 
         this.infoLayout = mainView.findViewById(R.id.infoLayout);
         this.tale = mainView.findViewById(R.id.tale);
-
-        this.content = initContent();
-        this.contentFL = mainView.findViewById(R.id.contentFL);
-        this.contentFL.addView(content.getMainView());
-
         this.time = mainView.findViewById(R.id.time);
-        this.time.setText(Static.getTime(publicMessage.getDate()));
+        this.time.setText(Static.getTime(message.getDate()));
 
         initEvent();
     }
-
-    private BM_Content initContent() {
-        return new BM_TextContent(con, publicMessage.getText());
-    }
-
-    public PublicMessages getPublicMessage() {
-        return publicMessage;
+    public Messages getMessage() {
+        return message;
     }
 
 
@@ -137,6 +86,8 @@ public abstract class MsgBubbleView extends BubbleView {
 
     public void setContent(BM_Content content) {
         this.content = content;
+        this.contentFL = mainView.findViewById(R.id.contentFL);
+        this.contentFL.addView(content.getMainView());
     }
 
 
@@ -166,15 +117,12 @@ public abstract class MsgBubbleView extends BubbleView {
         View replayImg = mainView.findViewById(R.id.replay);
         View theMainView = mainView.findViewById(R.id.mainRL);
 
-        theMainView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!selectedBubble.isEmpty()) {
-                    if (selectedBubble.contains(MsgBubbleView.this))
-                        deleteBubble();
-                    else
-                        selectBubble();
-                }
+        theMainView.setOnClickListener(v -> {
+            if (!selectedBubble.isEmpty()) {
+                if (selectedBubble.contains(MsgBubbleView.this))
+                    deleteBubble();
+                else
+                    selectBubble();
             }
         });
 
@@ -196,7 +144,7 @@ public abstract class MsgBubbleView extends BubbleView {
                             break;
 
                         case MotionEvent.ACTION_UP:
-                            releaseView(event);
+                            releaseView();
                             break;
                         default:
                             return false;
@@ -213,7 +161,7 @@ public abstract class MsgBubbleView extends BubbleView {
                 firstValue = event.getRawX() + dX;
             }
 
-            private void releaseView(MotionEvent event) {
+            private void releaseView() {
                 isInReplayMode = false;
                 theMainView.getParent().requestDisallowInterceptTouchEvent(false);
                 isNotVibrate = true;
@@ -244,8 +192,8 @@ public abstract class MsgBubbleView extends BubbleView {
                     Vibrator vb = (Vibrator) con.getSystemService(Context.VIBRATOR_SERVICE);
                     vb.vibrate(10);
 
-                    Intent intent = new Intent(con.getString(R.string.replay_messagesBroadcast));
-                    intent.putExtra(Static.PublicMsg, publicMessage);
+                    Intent intent = new Intent(con.getString(R.string.replayMessagesBroadcast));
+                    intent.putExtra(Static.Message, message);
                     intent.putExtra(Static.BubbleType, bubbleType);
                     con.sendBroadcast(intent);
                 }
@@ -292,6 +240,14 @@ public abstract class MsgBubbleView extends BubbleView {
         colorAnimation.setRepeatMode(ValueAnimator.REVERSE);
         colorAnimation.addUpdateListener(animator -> _f(R.id.mainRL).setBackgroundColor((Integer) animator.getAnimatedValue()));
         colorAnimation.start();
+    }
+
+    public View getInfoLayout() {
+        return _f(R.id.infoLayout);
+    }
+
+    public View getTale() {
+        return _f(R.id.tale);
     }
 
 }

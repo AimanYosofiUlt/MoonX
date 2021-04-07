@@ -13,6 +13,10 @@ public class Str {
     public static final String ForAdmin = "ForAdmin";
     public static final String ForUsers = "ForUsers";
 
+    public static final String Messages = "Messages";
+
+    public static final String Files = "Files";
+
     public static final String AppSet = "AppSet";
     public static final String PublicMessageAdmin = "PublicMessageAdmin";
 }

@@ -6,16 +6,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
@@ -26,7 +30,7 @@ import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Folder;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
 import com.ewu.moonx.Pojo.DB.Models.Users;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.MainPkj.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,6 +39,10 @@ import com.google.firebase.storage.UploadTask;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -48,6 +56,8 @@ public class Login_setUserImgActivity extends AppCompatActivity {
     boolean isNeedToSendImg = true;
     String imageName;
     private final int PERMISSON_CODE = 12;
+    View skipLink;
+    private String TAG = "A@2 ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +70,11 @@ public class Login_setUserImgActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         saveBtn = findViewById(R.id.save);
+        skipLink = findViewById(R.id.skipLink);
         initEvent();
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initEvent() {
         findViewById(R.id.pickImgBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +84,7 @@ public class Login_setUserImgActivity extends AppCompatActivity {
                     startActivityForResult(intent, RESULT_LOAD_IMAGE);
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSON_CODE);
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSON_CODE);
                     }
 
                 }
@@ -119,6 +131,19 @@ public class Login_setUserImgActivity extends AppCompatActivity {
                 }).addOnFailureListener(e -> Status.showErrorMessage(Login_setUserImgActivity.this, saveBtn, getString(R.string.weak_internet_connection)));
             }
         });
+
+        skipLink.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                ((TextView) findViewById(R.id.skipText)).setTextColor(getResources().getColor(R.color.third_color));
+                findViewById(R.id.skipUnderLine).setBackgroundColor(getResources().getColor(R.color.third_color));
+            } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                ((TextView) findViewById(R.id.skipText)).setTextColor(getResources().getColor(R.color.selectColor));
+                findViewById(R.id.skipUnderLine).setBackgroundColor(getResources().getColor(R.color.selectColor));
+            }
+            return false;
+        });
+
+        skipLink.setOnClickListener(v -> showMainActivity());
     }
 
     private void updateImageName() {
@@ -141,7 +166,7 @@ public class Login_setUserImgActivity extends AppCompatActivity {
     }
 
     private void showMainActivity() {
-        UsersTable table = new UsersTable(this);
+        SettingTable table = new SettingTable(this);
         DB.set(table.allowUserCol, table.hisAllowed_WithImg).update(table).exec();
 
         Intent intent = new Intent(Login_setUserImgActivity.this, MainActivity.class);
@@ -178,10 +203,7 @@ public class Login_setUserImgActivity extends AppCompatActivity {
     void cropImage(Uri uri) {
         imageName = Firebase.FireCloudRef(Str.Users).document(Static.getUid()).collection("imageName").document().getId();
 
-        String path = Static.getProfileImagePath(this);
-        File folder = new File(path);
-        if (!folder.exists())
-            folder.mkdir();
+        File folder = Static.getProfileImagePath(this);
 
         String imageFullName = Static.getUid() + "." + imageName;
         Uri destinationUri = Uri.fromFile(new File(folder, imageFullName));
@@ -207,9 +229,11 @@ public class Login_setUserImgActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == PERMISSON_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent, RESULT_LOAD_IMAGE);
+            } else {
+                Toast.makeText(this, getString(R.string.promission_requseted), Toast.LENGTH_SHORT).show();
             }
         }
     }

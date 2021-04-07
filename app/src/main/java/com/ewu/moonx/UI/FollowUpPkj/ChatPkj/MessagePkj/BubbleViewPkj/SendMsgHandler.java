@@ -5,7 +5,7 @@ import android.content.Context;
 import com.ewu.moonx.App.Firebase;
 import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 
 public class SendMsgHandler {
     Context con;
@@ -42,7 +42,7 @@ public class SendMsgHandler {
 
     private void sendPublicMessage() {
         String userStr;
-        if (userType.equals(UsersTable.hisEmpAdmin))
+        if (userType.equals(SettingTable.hisEmpAdmin))
             userStr = Str.ForAdmin;
         else
             userStr = Str.ForUsers;

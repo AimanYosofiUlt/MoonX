@@ -1,13 +1,10 @@
-package com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj;
+package com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.PublicService;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.ewu.moonx.App.Firebase;
 import com.ewu.moonx.App.Static;
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
@@ -20,8 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-
-import static android.content.ContentValues.TAG;
 
 public class SendPublicChatReciver extends BroadcastReceiver {
     Context context;
@@ -61,9 +56,7 @@ public class SendPublicChatReciver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         PublicMessages message = ((PublicMessages) intent.getSerializableExtra(Static.PublicMsg));
         sendList.add(new SendPublicTracker(message));
-        Toast.makeText(context, "on send reciver", Toast.LENGTH_SHORT).show();
 
-        Log.d(TAG, "onReceive: on Send Receive");
         sendList();
     }
 
@@ -91,7 +84,7 @@ public class SendPublicChatReciver extends BroadcastReceiver {
     private OnSuccessListener<? super Void> onComplete(SendPublicTracker sendPublicTracker) {
         return (OnSuccessListener<Void>) aVoid -> {
             sendList.remove(sendPublicTracker);
-            Intent intent = new Intent(context.getString(R.string.sendDone_PublicMessageBroadCast));
+            Intent intent = new Intent(context.getString(R.string.done_SendPublicMessagesDoneBroadCast));
             intent.putExtra(Static.PublicMsg, sendPublicTracker.getMessage());
             context.sendBroadcast(intent);
         };

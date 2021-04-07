@@ -7,14 +7,14 @@ import com.ewu.moonx.Pojo.DB.DBPkj.Segments.DBColumn;
 public class MessageTable extends DataBase {
     final static String TableName = "MessageTable";
 
-    DBColumn idCol = new DBColumn(this).getStringInstance("ID");
-    DBColumn senderUidCol = new DBColumn(this).getStringInstance("SenderUid");
-    DBColumn receiverUidCol = new DBColumn(this).getStringInstance("ReceiverUid");
-    DBColumn contentCol = new DBColumn(this).getStringInstance("Content");
-    DBColumn typeCol = new DBColumn(this).getStringInstance("Type");
-    DBColumn dateCol = new DBColumn(this).getStringInstance("Date");
-    DBColumn statueCol = new DBColumn(this).getStringInstance("Statue");
-    DBColumn replayMsgIdCol = new DBColumn(this).getStringInstance("ReplayMsg");
+    public DBColumn idCol = new DBColumn(this).getStringInstance("ID");
+    public DBColumn senderUidCol = new DBColumn(this).getStringInstance("SenderUid");
+    public DBColumn receiverUidCol = new DBColumn(this).getStringInstance("ReceiverUid");
+    public DBColumn contentCol = new DBColumn(this).getStringInstance("Content");
+    public DBColumn typeCol = new DBColumn(this).getStringInstance("Type");
+    public DBColumn dateCol = new DBColumn(this).getStringInstance("Date");
+    public DBColumn statueCol = new DBColumn(this).getStringInstance("Statue");
+    public DBColumn replayMsgIdCol = new DBColumn(this).getStringInstance("ReplayMsg");
 
     // Sended Messages
     public static final String ItsInProgress = "ItsInProgress";
@@ -26,6 +26,7 @@ public class MessageTable extends DataBase {
     // Recived Messages
     public static final String StUser_Read = "StUser_Read";
     public static final String StUser_notRead = "StUser_notRead";
+    public static final String StUser_needDownload = "StDownload";
 
     public MessageTable(Context context) {
         super(context, TableName);

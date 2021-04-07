@@ -41,35 +41,35 @@ public class ChatViewModel extends ViewModel {
         PublicMessagesTable table = new PublicMessagesTable(con);
         chatCursor = DB.selectAll().from(table).orderBy(table.dateCol, DBOrder.DESC).start();
         messageCount = chatCursor.getCount();
-        addFromDBToLayout();
+//        addFromDBToLayout();
     }
 
-    public MutableLiveData<PublicMessages> addFromDBToLayout() {
-        if (messageCount > 1) {
-            int d = 0;
-            while (chatCursor.moveToNext() && d < 20) {
-                d++;
-                publicMessage.postValue(getPublicMessage());
-                messageCount--;
-            }
-        }
-        return publicMessage;
-    }
+//    public MutableLiveData<PublicMessages> addFromDBToLayout() {
+//        if (messageCount > 1) {
+//            int d = 0;
+//            while (chatCursor.moveToNext() && d < 20) {
+//                d++;
+//                publicMessage.postValue(getPublicMessage());
+//                messageCount--;
+//            }
+//        }
+//        return publicMessage;
+//    }
 
-    private PublicMessages getPublicMessage() {
-        PublicMessages message = new PublicMessages();
-        message.setId(chatCursor.getString(0));
-        message.setUserId(chatCursor.getString(1));
-        message.setUserName(chatCursor.getString(2));
-        message.setText(chatCursor.getString(3));
-
-        try {
-            message.setDate(Static.getDate(chatCursor.getString(4)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return message;
-    }
+//    private PublicMessages getPublicMessage() {
+////        PublicMessages message = new PublicMessages();
+////        message.setId(chatCursor.getString(0));
+////        message.setUserId(chatCursor.getString(1));
+////        message.setUserName(chatCursor.getString(2));
+////        message.getContent(chatCursor.getString(3));
+////
+////        try {
+////            message.setDate(Static.getDate(chatCursor.getString(4)));
+////        } catch (ParseException e) {
+////            e.printStackTrace();
+////        }
+//        return message;
+//    }
 
     @Override
     protected void onCleared() {

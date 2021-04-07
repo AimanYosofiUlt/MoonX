@@ -60,6 +60,8 @@
                         android:layout_below="@id/replayFL"
                         android:layout_margin="2dp">
 
+                        <include layout="@layout/view_image_contnet" />
+
                     </FrameLayout>
                 </TableRow>
             </TableLayout>

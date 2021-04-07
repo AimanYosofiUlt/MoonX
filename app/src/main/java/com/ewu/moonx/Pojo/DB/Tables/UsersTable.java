@@ -1,7 +1,7 @@
 package com.ewu.moonx.Pojo.DB.Tables;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+
 import com.ewu.moonx.Pojo.DB.DBPkj.Segments.DBColumn;
 
 public class UsersTable extends DataBase {
@@ -13,20 +13,12 @@ public class UsersTable extends DataBase {
     public final DBColumn thirdNameCol = new DBColumn(this).getStringInstance("ThirdName");
     public final DBColumn phoneCol = new DBColumn(this).getStringInstance("Phone");
     public final DBColumn typeCol = new DBColumn(this).getStringInstance("Type");
-    public final DBColumn allowUserCol = new DBColumn(this).getStringInstance("AllowUser");
-    public final DBColumn signCountCol =new DBColumn(this).getNumericInstance("SignCount");
+    public final DBColumn imageName = new DBColumn(this).getStringInstance("ImageNamw");
+    public final DBColumn statueCol = new DBColumn(this).getStringInstance("Statue");
 
-    //Attr
-    public static final String hisJournalist = "JournalistType";
-    public static final String hisAdmin = "AdminType";
-    public static final String hisBlock = "BlockType";
-    public static final String hisEmpAdmin = "BlockType";
-    public static final String hisPublic = "Public";
-
-
-    public final String hisAllowed_WithoutImg = "hisAllowed";
-    public final String hisAllowed_WithImg = "hisAllowed_withImg";
-    public final String hisNotAllowed = "hisNotAllowed";
+    public static final String IsNormal = "IsNormal";
+    public static final String IsDeleted = "IsDeleted";
+    public static final String IsBlocked = "IsBlocked";
 
     public UsersTable(Context context) {
         super(context, TableName);

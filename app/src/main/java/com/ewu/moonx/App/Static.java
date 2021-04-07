@@ -2,15 +2,14 @@ package com.ewu.moonx.App;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Environment;
 
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
-import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.PublicChatPkj.PublicChatService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,21 +32,44 @@ public class Static {
 
     public static final String isPublicMsg = "isPublicMsg";
     public static final String PublicMsg = "PublicMsg";
+    public static final String UserMsg = "UserMsg";
     public static final String UserName = "UserName";
     public static final String UserId = "UserId";
 
     public static final String UserType = "UserType";
 
-    public static final String isForGetChatUser  = "isForGetChatUser";
+    public static final String isForGetChatUser = "isForGetChatUser";
     public static final String BubbleType = "BubbleType";
     public static final String msgId = "msgId";
+    public static final String Message = "Message";
+    public static final String Progress = "Progress";
 
-    public static String getProfileImagePath(Context context) {
-        return getMainPath(context) + "/Profile Image";
+    public static File getRecordFile(Context context, String mesId) {
+        return new File(getRecordPath(context) + "/" + mesId + ".m4a");
     }
 
-    private static String getMainPath(Context context) {
-        return Environment.getExternalStorageDirectory() + "/" + context.getString(R.string.app_name);
+    private static File getRecordPath(Context context) {
+        File path = new File(getMainPath(context) + "/Record");
+        if (!path.exists())
+            path.mkdir();
+
+        return path;
+    }
+
+    public static File getProfileImagePath(Context context) {
+        File path = new File(getMainPath(context) + "/Profile Image");
+        if (!path.exists())
+            path.mkdir();
+
+        return path;
+    }
+
+    private static File getMainPath(Context context) {
+        File path = new File(android.os.Environment.getExternalStorageDirectory() + "/" + context.getString(R.string.app_name));
+        if (!path.exists())
+            path.mkdir();
+
+        return path;
     }
 
     public static String getUid() {
@@ -74,9 +96,8 @@ public class Static {
         return sdf.parse(string);
     }
 
-    public static DatabaseReference getSendPublicRef(String userType, String userId)
-    {
-        if (userType.equals(UsersTable.hisEmpAdmin))
+    public static DatabaseReference getSendPublicRef(String userType, String userId) {
+        if (userType.equals(SettingTable.hisEmpAdmin))
             return Firebase.RealTimeRef(Str.PublicMessages).child(Str.ForUsers).child(userId);
         else
             return Firebase.RealTimeRef(Str.PublicMessages).child(Str.ForAdmin);

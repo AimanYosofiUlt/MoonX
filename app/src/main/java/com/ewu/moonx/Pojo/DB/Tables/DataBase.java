@@ -1,6 +1,5 @@
 package com.ewu.moonx.Pojo.DB.Tables;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,19 +26,20 @@ public abstract class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        UsersTable usersTable = new UsersTable(context);
+        SettingTable settingTable = new SettingTable(context);
         PublicMessagesTable publicMessagesTable = new PublicMessagesTable(context);
         MessageTable messageTable = new MessageTable(context);
+        UsersTable usersTable = new UsersTable(context);
 
-        addColumn(usersTable.idCol, true, true);
-        addColumn(usersTable.firstNameCol, true, true);
-        addColumn(usersTable.secondNameCol, true, true);
-        addColumn(usersTable.thirdNameCol, true, true);
-        addColumn(usersTable.phoneCol, true, true);
-        addColumn(usersTable.typeCol, UsersTable.hisAdmin);
-        addColumn(usersTable.allowUserCol, usersTable.hisNotAllowed);
-        addColumn(usersTable.signCountCol, true, true);
-        CreateTable(db, UsersTable.TableName);
+        addColumn(settingTable.idCol, true, true);
+        addColumn(settingTable.firstNameCol, true, true);
+        addColumn(settingTable.secondNameCol, true, true);
+        addColumn(settingTable.thirdNameCol, true, true);
+        addColumn(settingTable.phoneCol, true, true);
+        addColumn(settingTable.typeCol, SettingTable.hisAdmin);
+        addColumn(settingTable.allowUserCol, settingTable.hisNotAllowed);
+        addColumn(settingTable.signCountCol, true, true);
+        createTable(db, SettingTable.TableName);
 
 
         addColumn(publicMessagesTable.idCol, true, true);
@@ -49,7 +49,7 @@ public abstract class DataBase extends SQLiteOpenHelper {
         addColumn(publicMessagesTable.dateCol, true, false);
         addColumn(publicMessagesTable.statueCol, true, false);
         addColumn(publicMessagesTable.replayMsgIdCol, false, false);
-        CreateTable(db, PublicMessagesTable.TableName);
+        createTable(db, PublicMessagesTable.TableName);
 
 
         addColumn(messageTable.idCol, true, true);
@@ -60,7 +60,17 @@ public abstract class DataBase extends SQLiteOpenHelper {
         addColumn(messageTable.dateCol, true, false);
         addColumn(messageTable.statueCol, true, false);
         addColumn(messageTable.replayMsgIdCol, false, false);
-        CreateTable(db, MessageTable.TableName);
+        createTable(db, MessageTable.TableName);
+
+        addColumn(usersTable.idCol, true, true);
+        addColumn(usersTable.firstNameCol, true, false);
+        addColumn(usersTable.secondNameCol, true, false);
+        addColumn(usersTable.thirdNameCol, true, false);
+        addColumn(usersTable.phoneCol, true, true);
+        addColumn(usersTable.typeCol, true, false);
+        addColumn(usersTable.statueCol, UsersTable.IsNormal);
+        addColumn(usersTable.imageName, true, false);
+        createTable(db, UsersTable.TableName);
     }
 
     public String getTableName() {
@@ -72,7 +82,7 @@ public abstract class DataBase extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);
     }
 
-    protected void CreateTable(SQLiteDatabase db, String TName) {
+    protected void createTable(SQLiteDatabase db, String TName) {
         db.execSQL("CREATE TABLE " + TName + " ( " + AddColumens + " )");
         AddColumens = "";
     }

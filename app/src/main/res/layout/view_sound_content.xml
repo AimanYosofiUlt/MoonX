@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/content_view_background"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/info_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp">
+
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerInParent="true"
+            app:cpb_background_progressbar_color="@color/primary_color"
+            app:cpb_background_progressbar_width="2dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="@color/third_color"
+            app:cpb_progressbar_width="5dp"
+            app:cpb_round_border="true" />
+
+        <ImageView
+            android:id="@+id/viewImage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:alpha="0"
+            android:src="@drawable/option_audio"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/udBtn"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerInParent="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/cancel" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/info_l"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="120dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/viewImage2"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/option_audio" />
+
+            <ImageView
+                android:id="@+id/start_play"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/viewImage2"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/play"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="3dp"
+                android:fontFamily="@font/main"
+                android:gravity="center"
+                android:text="00:00"
+                android:textAlignment="center"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+
+        <SeekBar
+            android:id="@+id/seekBar_luminosite"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:max="1000"
+            android:paddingLeft="0dp"
+            android:paddingTop="5dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
+            android:progressDrawable="@drawable/seek_style"
+            android:thumb="@drawable/seek_thumb"
+            android:visibility="visible" />
+    </LinearLayout>
+</RelativeLayout>

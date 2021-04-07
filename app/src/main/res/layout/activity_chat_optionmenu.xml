@@ -56,4 +56,17 @@
             android:src="@drawable/forward" />
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/menu_cancel"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/round_btn"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@drawable/back_arrow" />
 </RelativeLayout>

@@ -21,7 +21,7 @@ import com.ewu.moonx.Pojo.DB.Models.OldAccount;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
 import com.ewu.moonx.Pojo.DB.Models.Users;
 import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -100,11 +100,13 @@ public class Login_VerifyActivity extends AppCompatActivity {
         verifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (verifyBtn.getProgress() != Static.LOADING)
+                if (verifyBtn.getProgress() != Static.LOADING) {
+                    verifyBtn.setProgress(Static.LOADING);
                     if (isNeedConfig)
                         configuration();
                     else
                         checkUserInFDB();
+                }
             }
 
             public void configuration() {
@@ -206,7 +208,7 @@ public class Login_VerifyActivity extends AppCompatActivity {
                 , secondName
                 , thirdName
                 , phoneNumber
-                , UsersTable.hisAdmin
+                , SettingTable.hisAdmin
                 , singedCount
                 , "null");
 
@@ -231,13 +233,13 @@ public class Login_VerifyActivity extends AppCompatActivity {
             }
 
             private void saveInfoInDB() {
-                UsersTable users = new UsersTable(Login_VerifyActivity.this);
+                SettingTable users = new SettingTable(Login_VerifyActivity.this);
                 DB.insert(users.idCol, Static.getUid())
                         .insert(users.firstNameCol, firstName)
                         .insert(users.secondNameCol, secondName)
                         .insert(users.thirdNameCol, thirdName)
                         .insert(users.phoneCol, phoneNumber)
-                        .insert(users.typeCol, UsersTable.hisAdmin)
+                        .insert(users.typeCol, SettingTable.hisAdmin)
                         .insert(users.signCountCol, singedCount)
                         .inTo(users);
             }

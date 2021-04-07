@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
-import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.LoginPkj.Login_DoneActivity;
@@ -29,7 +29,6 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        DB.delete(new PublicMessagesTable(this)).exec();
         init();
     }
 
@@ -69,7 +68,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean isUserAllowed() {
-        UsersTable users = new UsersTable(this);
+        SettingTable users = new SettingTable(this);
         Cursor cursor = DB.select(users.allowUserCol).from(users).start();
         cursor.moveToNext();
         return cursor.getString(0).equals(users.hisAllowed_WithImg);
@@ -81,7 +80,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private boolean isUserExist() {
         boolean isUserExist = false;
-        Cursor cursor = DB.selectAll().from(new UsersTable(this)).start();
+        Cursor cursor = DB.selectAll().from(new SettingTable(this)).start();
         if (cursor != null && cursor.getCount() > 0) {
             isUserExist = true;
         }

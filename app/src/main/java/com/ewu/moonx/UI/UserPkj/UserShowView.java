@@ -13,6 +13,7 @@ import com.ewu.moonx.App.Static;
 import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Folder;
 import com.ewu.moonx.Pojo.DB.Models.Users;
 import com.ewu.moonx.R;
+import com.ewu.moonx.UI.FollowUpPkj.ChatPkj.ChatActivity;
 
 import java.io.File;
 import java.util.Objects;
@@ -38,7 +39,7 @@ public class UserShowView extends CustomView {
 
     private void setImageFromFiles() {
         Toast.makeText(con, "setImageFrom " + user.getFirstName(), Toast.LENGTH_SHORT).show();
-        File profileImageDir = new File(Static.getProfileImagePath(con));
+        File profileImageDir = Static.getProfileImagePath(con);
         if (!profileImageDir.exists() || profileImageDir.listFiles() == null) {
             downloadImage(profileImageDir);
         } else {
@@ -99,13 +100,16 @@ public class UserShowView extends CustomView {
 
     @Override
     protected void initEvent() {
-        _f(R.id.view).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(con, UserInfoActivity.class);
-                intent.putExtra(Static.UserInfo, user);
-                con.startActivity(intent);
+        _f(R.id.view).setOnClickListener(v -> {
+            Intent intent;
+            if (UserActivity.isForUserChat) {
+                intent = new Intent(con, ChatActivity.class);
+            } else {
+                intent = new Intent(con, UserInfoActivity.class);
             }
+            intent.putExtra(Static.UserInfo, user);
+            con.startActivity(intent);
+            con.finish();
         });
     }
 

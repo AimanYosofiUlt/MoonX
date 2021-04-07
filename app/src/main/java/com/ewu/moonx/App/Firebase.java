@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.ewu.moonx.Pojo.DB.DBPkj.Executive.DB;
 import com.ewu.moonx.Pojo.DB.Models.PublicMessages;
+import com.ewu.moonx.Pojo.DB.Models.UserMessages;
 import com.ewu.moonx.Pojo.DB.Tables.MessageTable;
 import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
 import com.google.firebase.database.DatabaseReference;
@@ -47,4 +48,29 @@ public class Firebase {
                 .insert(table.replayMsgIdCol, publicMessage.getReplayMsgId()).inTo(table);
     }
 
+    public static void addSenderUserMessageToDB(Context con, UserMessages message) {
+        if (message.getType().equals(UserMessages.TEXT_TYPE))
+            addUserMessageToDB(con, message, MessageTable.ItsInProgress);
+        else
+            addUserMessageToDB(con, message, MessageTable.ItsWaitContent);
+    }
+
+    public static void addReceiveUserMessageToDB(Context con, UserMessages message) {
+        if (message.getType().equals(UserMessages.TEXT_TYPE))
+            addUserMessageToDB(con, message, MessageTable.StUser_notRead);
+        else
+            addUserMessageToDB(con, message, MessageTable.StUser_notRead + MessageTable.StUser_needDownload);
+    }
+
+    public static void addUserMessageToDB(Context con, UserMessages message, String statue) {
+        MessageTable table = new MessageTable(con);
+        DB.insert(table.idCol, message.getId())
+                .insert(table.senderUidCol, message.getSenderUid())
+                .insert(table.receiverUidCol, message.getReceiverUid())
+                .insert(table.contentCol, message.getText())
+                .insert(table.typeCol, message.getText())
+                .insert(table.dateCol, Static.getDateTimeString(message.getDate()))
+                .insert(table.statueCol, statue)
+                .insert(table.replayMsgIdCol, message.getReplayMsgId()).inTo(table);
+    }
 }

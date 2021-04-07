@@ -11,7 +11,7 @@ import androidx.core.content.ContextCompat;
 
 import com.ewu.moonx.App.Static;
 import com.ewu.moonx.Pojo.DB.Models.Users;
-import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
+import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
 import com.ewu.moonx.R;
 
 import java.io.File;
@@ -35,7 +35,7 @@ public class UserInfoActivity extends AppCompatActivity {
         String fullName = user.getFirstName() + " " + user.getSecondName() + " " + user.getThirdName();
         ((TextView) findViewById(R.id.userName)).setText(fullName);
 
-        if (user.getType().equals(UsersTable.hisAdmin)) {
+        if (user.getType().equals(SettingTable.hisAdmin)) {
             ((ImageView) findViewById(R.id.appIcon)).setImageDrawable(ContextCompat.getDrawable(this, R.drawable.glasslogo));
             ((TextView) findViewById(R.id.appName)).setText(R.string.moonx_platform);
         } else {
