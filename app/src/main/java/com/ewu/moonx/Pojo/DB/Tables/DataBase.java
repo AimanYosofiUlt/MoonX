@@ -30,6 +30,7 @@ public abstract class DataBase extends SQLiteOpenHelper {
         PublicMessagesTable publicMessagesTable = new PublicMessagesTable(context);
         MessageTable messageTable = new MessageTable(context);
         UsersTable usersTable = new UsersTable(context);
+        TrainTable trainTable = new TrainTable(context);
 
         addColumn(settingTable.idCol, true, true);
         addColumn(settingTable.firstNameCol, true, true);
@@ -71,6 +72,9 @@ public abstract class DataBase extends SQLiteOpenHelper {
         addColumn(usersTable.statueCol, UsersTable.IsNormal);
         addColumn(usersTable.imageName, true, false);
         createTable(db, UsersTable.TableName);
+
+        addColumn(trainTable.image, true, false);
+        createTable(db, TrainTable.TableName);
     }
 
     public String getTableName() {

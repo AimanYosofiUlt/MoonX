@@ -468,6 +468,14 @@ public class ChatActivity extends AppCompatActivity {
                 }).start();
             }
         });
+
+        _f(R.id.option_images).setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent,"Select Picture"), Static.RESULT_CODE1);
+        });
     }
 
 

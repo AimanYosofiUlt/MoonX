@@ -22,7 +22,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/option_picture"
+            android:id="@+id/option_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

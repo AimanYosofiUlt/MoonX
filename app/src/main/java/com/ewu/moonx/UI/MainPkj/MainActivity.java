@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         empFollowBtn.setOnClickListener(v -> startActivity(FollowUpActivity.class));
 
         userMgrBtn.setOnClickListener(v -> startActivity(UserActivity.class));
-
     }
 
 

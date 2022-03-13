@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp">
+
+    <TextView
+        android:id="@+id/link"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/main"
+        android:singleLine="true"
+        android:text="1- http://www.doc.com/dos/tjo3ksrkjqjskjrmnmnjnms"
+        android:textColor="@color/third_color"
+        android:textSize="16dp" />
+
+    <ImageView
+        android:id="@+id/searchBtn"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:paddingStart="2dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="2dp"
+        android:src="@drawable/loupe2" />
+</LinearLayout>

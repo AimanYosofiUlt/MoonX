@@ -22,6 +22,7 @@ import com.ewu.moonx.Pojo.DB.FireBaseTemplate.Str;
 import com.ewu.moonx.Pojo.DB.Models.UserConfig;
 import com.ewu.moonx.Pojo.DB.Tables.PublicMessagesTable;
 import com.ewu.moonx.Pojo.DB.Tables.SettingTable;
+import com.ewu.moonx.Pojo.DB.Tables.UsersTable;
 import com.ewu.moonx.R;
 import com.ewu.moonx.UI.MainPkj.StartPublicChattingHandler;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -92,6 +93,12 @@ public class Login_DoneActivity extends AppCompatActivity {
                                 }
                             })
                             .addOnFailureListener(e -> Status.showErrorMessage(Login_DoneActivity.this, verifyBtn, getString(R.string.weak_internet_connection)));
+
+
+//                showActivity(
+//                    new    UserConfig(Static.getUid(), "AdminType")
+//                );
+
                 }
             }
 
@@ -130,7 +137,22 @@ public class Login_DoneActivity extends AppCompatActivity {
                 });
     }
 
-    private void showActivity(UserConfig userConfig) {
+private void showActivity(UserConfig userConfig) {
+        if (userConfig.getUid().equals(Static.getUid())) {
+            Intent intent = new Intent(Login_DoneActivity.this, Login_setUserImgActivity.class);
+
+            SettingTable userTable = new SettingTable(Login_DoneActivity.this);
+
+            DB.set(userTable.typeCol, userConfig.getType())
+                    .set(userTable.allowUserCol, userTable.hisAllowed_WithoutImg).update(userTable).exec();
+            DB.delete(new PublicMessagesTable(Login_DoneActivity.this)).exec();
+
+            Login_DoneActivity.this.startActivity(intent);
+            Login_DoneActivity.this.finish();
+        }
+    }
+
+    private void showActivityToDelete(UserConfig userConfig) {
         if (userConfig.getUid().equals(Static.getUid())) {
             Intent intent = new Intent(Login_DoneActivity.this, Login_setUserImgActivity.class);
 

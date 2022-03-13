@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -18,48 +19,40 @@
         android:roundIcon="@drawable/glasslogo"
         android:supportsRtl="false"
         android:theme="@style/Theme.MoonX">
-        <activity android:name=".UI.RequestPkj.RequestMgrActivity"></activity>
-        <activity android:name=".UI.LoginPkj.Login_setUserImgActivity">
+        <activity android:name=".LinksActivity">
 
         </activity>
+        <!-- Activity -->
+        <activity android:name=".UI.FollowUpPkj.ChatPkj.SendImagesActivity" />
+        <activity android:name=".UI.RequestPkj.RequestMgrActivity" />
+        <activity android:name=".UI.LoginPkj.Login_setUserImgActivity" />
         <activity android:name=".UI.UserPkj.UserActivity" />
-        <activity android:name=".UI.FollowUpPkj.FollowUpActivity">
-
-        </activity>
+        <activity android:name=".UI.FollowUpPkj.FollowUpActivity" />
         <activity android:name=".UI.LoginPkj.Login_DoneActivity" />
         <activity android:name=".UI.LoginPkj.Login_VerifyActivity" />
         <activity android:name=".UI.LoginPkj.LoginActivity" />
-        <activity android:name=".UI.MainPkj.SplashActivity">
-
-        </activity>
-        <activity android:name=".UI.MainPkj.WelcomeActivity">
-
-        </activity>
-        <activity android:name=".UI.MainPkj.MainActivity">
-
-
-        </activity>
-        <activity android:name=".UI.UserPkj.UserInfoActivity">
-
-        </activity>
-        <activity android:name=".UI.FollowUpPkj.ChatPkj.ChatActivity" />
-        <activity
-            android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <service android:name=".UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.PublicService.PublicChatService" />
-        <service android:name=".UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.UserService.UserChatService" />
-
-        <activity android:name=".ViewModels.TrainActvity">
-
+        <activity android:name=".UI.MainPkj.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".UI.MainPkj.WelcomeActivity" />
+        <activity android:name=".UI.MainPkj.MainActivity">
 
         </activity>
+        <activity android:name=".UI.UserPkj.UserInfoActivity" />
+        <activity android:name=".UI.FollowUpPkj.ChatPkj.ChatActivity" />
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".TrainActvity">
+
+        </activity> <!-- Service -->
+        <service android:name=".UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.PublicService.PublicChatService" />
+        <service android:name=".UI.FollowUpPkj.ChatPkj.PublicChatPkj.ServicesPkj.UserService.UserChatService" />
     </application>
 
 </manifest>

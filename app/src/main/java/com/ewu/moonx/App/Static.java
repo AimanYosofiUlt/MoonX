@@ -43,6 +43,7 @@ public class Static {
     public static final String msgId = "msgId";
     public static final String Message = "Message";
     public static final String Progress = "Progress";
+    public static final int RESULT_CODE1 = 12;
 
     public static File getRecordFile(Context context, String mesId) {
         return new File(getRecordPath(context) + "/" + mesId + ".m4a");
